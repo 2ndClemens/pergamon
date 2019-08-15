@@ -24,8 +24,8 @@ export class GltfObjectComponent implements OnInit {
         metalness: 0.1,
         roughness: 0.4
       });
-      shaftGeometry.scale(0.0254, 0.0254, 0.0254);
-      shaftGeometry.translate(0,-97,0)
+      shaftGeometry.scale(0.001, 0.001, 0.001);
+      shaftGeometry.translate(0,-4.335 + .517,0)
       // const lathe = new THREE.Mesh(shaftGeometry, material);
 
 
@@ -66,56 +66,20 @@ export class GltfObjectComponent implements OnInit {
           material
         );
         for (let n = 0; n < mesh.instances.length; n++) {
-          mesh.instances[n].position.x = 2;
-          mesh.instances[n].position.y = 9.7;
-          mesh.instances[n].position.z = -20 * n;
-          mesh.instances[n].scale.x = 0.1;
-          mesh.instances[n].scale.y = 0.1;
-          mesh.instances[n].scale.z = 0.1;
+          mesh.instances[n].position.x = -4;
+          mesh.instances[n].position.y = 4.335;
+          mesh.instances[n].position.z = -2.645 * n;
+          mesh.instances[n].scale.x = 1;
+          mesh.instances[n].scale.y = 1;
+          mesh.instances[n].scale.z = 1;
         }
         mesh.updateInstances();
         this.scene.add(mesh);
 
-        /* gltf.animations; // Array<THREE.AnimationClip>
-      gltf.scene; // THREE.Scene
-      gltf.scenes; // Array<THREE.Scene>
-      gltf.cameras; // Array<THREE.Camera>
-      gltf.asset; // Object */
+
       });
     });
-    // geometry to be instanced
-    /* const boxGeometry = new THREE.BoxBufferGeometry(2, 2, 2, 1, 1, 1);
 
-    // material that the geometry will use
-    const material = new THREE.MeshPhongMaterial();
-
-    //the instance group
-    const THREE2: any = THREE;
-    const cluster = new THREE2.InstancedMesh(
-      boxGeometry, //this is the same
-      material,
-      1000, //instance count
-      false, //is it dynamic
-      false, //does it have color
-      true //uniform scale, if you know that the placement function will not do a non-uniform scale, this will optimize the shader
-    );
-
-    const _v3 = new THREE.Vector3();
-    const _q = new THREE.Quaternion();
-
-    for (var i = 0; i < 10000; i++) {
-      cluster.setQuaternionAt(i, _q);
-      cluster.setPositionAt(
-        i,
-        _v3.set(Math.random()*100, Math.random()*100, Math.random())
-      );
-      cluster.setScaleAt(i, _v3.set(1, 1, 1));
-    }
-
-    this.scene.add(cluster); */
-    /*  const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-    const cube = new THREE.Mesh(geometry, material);
-    this.scene.add(cube); */
   }
 
   buildShaft() {

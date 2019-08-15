@@ -7,6 +7,8 @@ import { SceneComponent } from './components/scene/scene.component';
 import { GltfObjectComponent } from './components/gltf-object/gltf-object.component';
 import { FloorComponent } from './components/floor/floor.component';
 import { ChamberComponent } from './components/chamber/chamber.component';
+import { ArchitraveComponent } from './components/architrave/architrave.component';
+import { RoofComponent } from './components/roof/roof.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +16,9 @@ import { ChamberComponent } from './components/chamber/chamber.component';
     SceneComponent,
     GltfObjectComponent,
     FloorComponent,
-    ChamberComponent
+    ChamberComponent,
+    ArchitraveComponent,
+    RoofComponent
   ],
   imports: [
     BrowserModule,

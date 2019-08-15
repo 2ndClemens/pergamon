@@ -36,7 +36,7 @@ export class SceneComponent implements OnInit {
   ngOnInit() {
     this.renderer = new THREE.WebGLRenderer({
       canvas: this.canvas,
-      antialias: false,
+      antialias: true,
       // precision: 'mediump',
       alpha: false
     });
@@ -64,10 +64,11 @@ export class SceneComponent implements OnInit {
     this.controls.target.setY(2);
 
     const light = new THREE.DirectionalLight(0xffffff, 0.8);
+    // light.rotateY(Math.PI/2);
     // scene.add(light);
     // const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
     // scene.add(directionalLight);
-    // light.target.position.set(0, 0, 0);
+    light.target.position.set(0, 0, 0);
     const hemilight = new THREE.HemisphereLight(0xffffbb, 0x080820, 2.5);
     this.scene.add(hemilight);
 
@@ -75,6 +76,8 @@ export class SceneComponent implements OnInit {
 
     const sky = new Sky();
     sky.scale.setScalar(10000);
+    // sky.rotateY(180);
+    sky.rotation.y =(180);
     this.scene.add(sky);
     const uniforms = sky.material.uniforms;
     uniforms.turbidity.value = 10;
@@ -85,7 +88,7 @@ export class SceneComponent implements OnInit {
     const parameters = {
       distance: 400,
       inclination: 0.1,
-      azimuth: 0.3
+      azimuth: .3
     };
 
     const theta = Math.PI * (parameters.inclination - 0.5);
@@ -97,6 +100,9 @@ export class SceneComponent implements OnInit {
     sky.material.uniforms.sunPosition.value = light.position.copy(
       light.position
     );
+    light.position.z = -parameters.distance * Math.sin(phi) * Math.cos(theta);
+
+    console.log( sky)
 
     this.onResize();
     this.animate();

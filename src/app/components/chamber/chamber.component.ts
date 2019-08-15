@@ -24,18 +24,19 @@ export class ChamberComponent implements OnInit {
       const g1 = new THREE.Geometry().fromBufferGeometry(
         gltf.scene.children[0].geometry
       );
+      mergeGeometry.merge(g1);
       const mesh = new InstancedMesh(
-        100,
+        19,
         new THREE.BufferGeometry().fromGeometry(mergeGeometry),
         material
       );
       for (let n = 0; n < mesh.instances.length; n++) {
-        mesh.instances[n].position.x = 2;
-        mesh.instances[n].position.y = 9.7;
-        mesh.instances[n].position.z = -20 * n;
-        mesh.instances[n].scale.x = 0.1;
-        mesh.instances[n].scale.y = 0.1;
-        mesh.instances[n].scale.z = 0.1;
+        mesh.instances[n].position.x = -8;
+        mesh.instances[n].position.y = 0;
+        mesh.instances[n].position.z = -4.454 * n;
+        mesh.instances[n].scale.x = 1;
+        mesh.instances[n].scale.y = 1;
+        mesh.instances[n].scale.z = 1;
       }
       mesh.updateInstances();
       this.scene.add(mesh);
