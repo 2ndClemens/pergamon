@@ -31,7 +31,7 @@ export class ChamberComponent implements OnInit {
         material
       );
       for (let n = 0; n < mesh.instances.length; n++) {
-        mesh.instances[n].position.x = -8;
+        mesh.instances[n].position.x = -4;
         mesh.instances[n].position.y = 0;
         mesh.instances[n].position.z = -4.454 * n;
         mesh.instances[n].scale.x = 1;

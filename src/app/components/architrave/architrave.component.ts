@@ -52,7 +52,7 @@ export class ArchitraveComponent implements OnInit {
         });
         const mesh = new THREE.Mesh(geometry, material);
         mesh.position.y = 4.335;
-        mesh.position.x = -4.2;
+        mesh.position.x = -0.2;
         mesh.position.z = -16;
         this.scene.add(mesh);
       }

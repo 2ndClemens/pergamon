@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import * as THREE from 'three';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 @Component({
   selector: 'app-floor',
   templateUrl: './floor.component.html',
@@ -10,7 +11,7 @@ export class FloorComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    const texture = new THREE.TextureLoader().load(
+    /* const texture = new THREE.TextureLoader().load(
       '../../../assets/png/mosaic.jpg'
     );
     texture.repeat.setX(20);
@@ -18,11 +19,24 @@ export class FloorComponent implements OnInit {
     texture.wrapS = THREE.RepeatWrapping;
     texture.wrapT = THREE.RepeatWrapping;
 
-    // immediately use the texture for material creation
     const material = new THREE.MeshBasicMaterial({ map: texture });
     const geometry = new THREE.PlaneBufferGeometry(100, 100);
     geometry.rotateX(-Math.PI / 2);
     const floor = new THREE.Mesh(geometry, material);
-    this.scene.add(floor);
+    this.scene.add(floor); */
+
+    const loader = new GLTFLoader();
+    loader.load('../../../assets/gltf/road.glb', (gltf: any) => {
+      // const mergeGeometry = new THREE.Geometry();
+
+      const mesh = gltf.scene.children[0];
+     /*  mesh.position.x = -13.85;
+
+      mesh.material.normalMap.repeat.setX(100);
+      mesh.material.normalMap.repeat.setY(10);
+      mesh.material.normalMap.wrapS = THREE.RepeatWrapping;
+      mesh.material.normalMap.wrapT = THREE.RepeatWrapping; */
+      this.scene.add(mesh);
+    });
   }
 }

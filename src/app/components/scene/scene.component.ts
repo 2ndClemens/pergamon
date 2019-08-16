@@ -20,6 +20,7 @@ export class SceneComponent implements OnInit {
   camera: THREE.PerspectiveCamera;
   renderer: THREE.WebGLRenderer;
   controls: MapControls;
+  columnPositions: THREE.Vector3[] = [];
 
   private get canvas(): HTMLCanvasElement {
     return this.canvasRef.nativeElement;
@@ -34,6 +35,11 @@ export class SceneComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
+    for (let n = 0; n < 100; n++) {
+      this.columnPositions.push(new THREE.Vector3(0, 4.335, -2.645 * n));
+      this.columnPositions.push(new THREE.Vector3(10, 4.335, -2.645 * n));
+    }
+
     this.renderer = new THREE.WebGLRenderer({
       canvas: this.canvas,
       antialias: true,
@@ -58,7 +64,7 @@ export class SceneComponent implements OnInit {
     this.controls.maxDistance = 500;
     this.controls.maxPolarAngle = Math.PI / 2;
 
-    this.camera.position.x = 0;
+    this.camera.position.x = 5;
     this.camera.position.y = 2;
     this.camera.position.z = 5;
     this.controls.target.setY(2);
@@ -77,7 +83,7 @@ export class SceneComponent implements OnInit {
     const sky = new Sky();
     sky.scale.setScalar(10000);
     // sky.rotateY(180);
-    sky.rotation.y =(180);
+    sky.rotation.y = 180;
     this.scene.add(sky);
     const uniforms = sky.material.uniforms;
     uniforms.turbidity.value = 10;
@@ -88,7 +94,7 @@ export class SceneComponent implements OnInit {
     const parameters = {
       distance: 400,
       inclination: 0.1,
-      azimuth: .3
+      azimuth: 0.3
     };
 
     const theta = Math.PI * (parameters.inclination - 0.5);
@@ -102,7 +108,7 @@ export class SceneComponent implements OnInit {
     );
     light.position.z = -parameters.distance * Math.sin(phi) * Math.cos(theta);
 
-    console.log( sky)
+    console.log(sky);
 
     this.onResize();
     this.animate();

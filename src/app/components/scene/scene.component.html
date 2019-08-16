@@ -2,7 +2,7 @@
 #canvas
 class="canvas"
 ></canvas>
-<app-gltf-object [scene]="scene"></app-gltf-object>
+<app-gltf-object *ngIf="columnPositions" [positions]="columnPositions" [scene]="scene"></app-gltf-object>
 <app-floor [scene]="scene"></app-floor>
 <app-chamber [scene]="scene"></app-chamber>
 <app-architrave  [scene]="scene"></app-architrave>

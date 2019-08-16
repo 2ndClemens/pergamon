@@ -14,6 +14,7 @@ import { InstancedMesh } from '../../instanced/mesh';
 })
 export class GltfObjectComponent implements OnInit {
   @Input() scene: THREE.Scene;
+  @Input() positions: THREE.Vector3[];
 
   constructor() {}
 
@@ -25,61 +26,64 @@ export class GltfObjectComponent implements OnInit {
         roughness: 0.4
       });
       shaftGeometry.scale(0.001, 0.001, 0.001);
-      shaftGeometry.translate(0,-4.335 + .517,0)
+      shaftGeometry.translate(0, -4.335 + 0.517, 0);
       // const lathe = new THREE.Mesh(shaftGeometry, material);
-
 
       // this.scene.add(lathe);
 
       // load a SVG resource
 
       const loader = new GLTFLoader();
-      loader.load('../../../assets/gltf/kapitell.glb', (gltf: any) => {
-        const mergeGeometry = new THREE.Geometry();
-        const g1 = new THREE.Geometry().fromBufferGeometry(
-          gltf.scene.children[0].geometry
+      loader.load('../../../assets/gltf/base.glb', (baseMesh: any) => {
+        const base = new THREE.Geometry().fromBufferGeometry(
+          baseMesh.scene.children[0].geometry
         );
-        // const matrix = new THREE.Matrix4();
+        loader.load('../../../assets/gltf/kapitell.glb', (gltf: any) => {
+          const mergeGeometry = new THREE.Geometry();
+          base.translate(0, -4.35, 0);
+          mergeGeometry.merge(base);
+          const g1 = new THREE.Geometry().fromBufferGeometry(
+            gltf.scene.children[0].geometry
+          );
+          // const matrix = new THREE.Matrix4();
 
-        mergeGeometry.merge(g1);
-        g1.rotateY(Math.PI);
-        mergeGeometry.merge(g1);
-        // matrix.set(-1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-        g1.scale(-1, 1, 1);
-        this.flipNormals(g1);
-        mergeGeometry.merge(g1);
-        g1.rotateY(Math.PI);
-        mergeGeometry.merge(g1);
+          mergeGeometry.merge(g1);
+          g1.rotateY(Math.PI);
+          mergeGeometry.merge(g1);
+          // matrix.set(-1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+          g1.scale(-1, 1, 1);
+          this.flipNormals(g1);
+          mergeGeometry.merge(g1);
+          g1.rotateY(Math.PI);
+          mergeGeometry.merge(g1);
 
-        mergeGeometry.mergeVertices();
-        mergeGeometry.merge(shaftGeometry);
-        // mergeGeometry.computeVertexNormals(true);
-        console.log(gltf.scene.children[0].matrix);
+          mergeGeometry.mergeVertices();
+          mergeGeometry.merge(shaftGeometry);
+          // mergeGeometry.computeVertexNormals(true);
+          console.log(gltf.scene.children[0].matrix);
 
-        // this.scene.add(gltf.scene.children[0]);
-        // const geometry = new THREE.BoxBufferGeometry(1, 1, 1);
+          // this.scene.add(gltf.scene.children[0]);
+          // const geometry = new THREE.BoxBufferGeometry(1, 1, 1);
 
-        // create 4096 instances of this mesh
-        const mesh = new InstancedMesh(
-          100,
-          new THREE.BufferGeometry().fromGeometry(mergeGeometry),
-          material
-        );
-        for (let n = 0; n < mesh.instances.length; n++) {
-          mesh.instances[n].position.x = -4;
-          mesh.instances[n].position.y = 4.335;
-          mesh.instances[n].position.z = -2.645 * n;
-          mesh.instances[n].scale.x = 1;
-          mesh.instances[n].scale.y = 1;
-          mesh.instances[n].scale.z = 1;
-        }
-        mesh.updateInstances();
-        this.scene.add(mesh);
-
-
+          // create 4096 instances of this mesh
+          const mesh = new InstancedMesh(
+            this.positions.length,
+            new THREE.BufferGeometry().fromGeometry(mergeGeometry),
+            material
+          );
+          for (let n = 0; n < mesh.instances.length; n++) {
+            mesh.instances[n].position.x = this.positions[n].x;
+            mesh.instances[n].position.y = this.positions[n].y;
+            mesh.instances[n].position.z = this.positions[n].z;
+            mesh.instances[n].scale.x = 1;
+            mesh.instances[n].scale.y = 1;
+            mesh.instances[n].scale.z = 1;
+          }
+          mesh.updateInstances();
+          this.scene.add(mesh);
+        });
       });
     });
-
   }
 
   buildShaft() {
