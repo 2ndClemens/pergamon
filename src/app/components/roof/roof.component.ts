@@ -13,7 +13,7 @@ export class RoofComponent implements OnInit {
 
   ngOnInit() {
     const loader = new GLTFLoader();
-    loader.load('../../../assets/gltf/roof.glb', (gltf: any) => {
+    loader.load('./assets/gltf/roof.glb', (gltf: any) => {
       // const mergeGeometry = new THREE.Geometry();
 /*       const geometry = new THREE.Geometry().fromBufferGeometry(
         gltf.scene.children[0].geometry

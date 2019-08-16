@@ -34,11 +34,11 @@ export class GltfObjectComponent implements OnInit {
       // load a SVG resource
 
       const loader = new GLTFLoader();
-      loader.load('../../../assets/gltf/base.glb', (baseMesh: any) => {
+      loader.load('./assets/gltf/base.glb', (baseMesh: any) => {
         const base = new THREE.Geometry().fromBufferGeometry(
           baseMesh.scene.children[0].geometry
         );
-        loader.load('../../../assets/gltf/kapitell.glb', (gltf: any) => {
+        loader.load('./assets/gltf/kapitell.glb', (gltf: any) => {
           const mergeGeometry = new THREE.Geometry();
           base.translate(0, -4.35, 0);
           mergeGeometry.merge(base);
@@ -91,7 +91,7 @@ export class GltfObjectComponent implements OnInit {
       const svgloader = new SVGLoader();
       svgloader.load(
         // resource URL
-        '../../../assets/svg/column.svg',
+        './assets/svg/column.svg',
         // called when the resource is loaded
         data => {
           const paths = data.paths;

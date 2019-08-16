@@ -19,7 +19,7 @@ export class ChamberComponent implements OnInit {
       roughness: 0.4
     });
     const loader = new GLTFLoader();
-    loader.load('../../../assets/gltf/chamber.glb', (gltf: any) => {
+    loader.load('./assets/gltf/chamber.glb', (gltf: any) => {
       const mergeGeometry = new THREE.Geometry();
       const g1 = new THREE.Geometry().fromBufferGeometry(
         gltf.scene.children[0].geometry

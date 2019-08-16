@@ -15,7 +15,7 @@ export class ArchitraveComponent implements OnInit {
     const svgloader = new SVGLoader();
     svgloader.load(
       // resource URL
-      '../../../assets/svg/architrave.svg',
+      './assets/svg/architrave.svg',
       // called when the resource is loaded
       data => {
         const paths = data.paths;

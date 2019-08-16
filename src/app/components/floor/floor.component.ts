@@ -12,7 +12,7 @@ export class FloorComponent implements OnInit {
 
   ngOnInit() {
     /* const texture = new THREE.TextureLoader().load(
-      '../../../assets/png/mosaic.jpg'
+      './assets/png/mosaic.jpg'
     );
     texture.repeat.setX(20);
     texture.repeat.setY(20);
@@ -26,7 +26,7 @@ export class FloorComponent implements OnInit {
     this.scene.add(floor); */
 
     const loader = new GLTFLoader();
-    loader.load('../../../assets/gltf/road.glb', (gltf: any) => {
+    loader.load('./assets/gltf/road.glb', (gltf: any) => {
       // const mergeGeometry = new THREE.Geometry();
 
       const mesh = gltf.scene.children[0];
