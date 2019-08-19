@@ -8,7 +8,7 @@ import {
 import * as THREE from 'three';
 declare const require: any;
 const Sky: any = require('./sky')(THREE);
-import { MapControls } from 'three/examples/jsm/controls/OrbitControls.js';
+// import { MapControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 @Component({
   selector: 'app-scene',
@@ -19,8 +19,10 @@ export class SceneComponent implements OnInit {
   scene = new THREE.Scene();
   camera: THREE.PerspectiveCamera;
   renderer: THREE.WebGLRenderer;
-  controls: MapControls;
+  // controls: MapControls;
   columnPositions: THREE.Vector3[] = [];
+  public mouseIsDown: boolean;
+  private mouse = new THREE.Vector2(0,0);
 
   private get canvas(): HTMLCanvasElement {
     return this.canvasRef.nativeElement;
@@ -55,19 +57,19 @@ export class SceneComponent implements OnInit {
       1000
     );
 
-    this.controls = new MapControls(this.camera);
+    /* this.controls = new MapControls(this.camera);
     //controls.addEventListener( 'change', render ); // call this only in static scenes (i.e., if there is no animation loop)
     this.controls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
     this.controls.dampingFactor = 0.05;
     this.controls.screenSpacePanning = false;
     this.controls.minDistance = 5;
     this.controls.maxDistance = 500;
-    this.controls.maxPolarAngle = Math.PI / 2;
+    this.controls.maxPolarAngle = Math.PI / 2; */
 
     this.camera.position.x = 5;
     this.camera.position.y = 2;
     this.camera.position.z = 5;
-    this.controls.target.setY(2);
+    // this.controls.target.setY(2);
 
     const light = new THREE.DirectionalLight(0xffffff, 0.8);
     // light.rotateY(Math.PI/2);
@@ -116,7 +118,11 @@ export class SceneComponent implements OnInit {
 
   animate() {
     requestAnimationFrame(this.animate.bind(this));
-    this.controls.update();
+    // this.controls.update();
+    if(this.mouseIsDown){
+      this.camera.translateZ(-.2);
+      this.camera.rotateY(- this.mouse.x  / 50);
+    }
     this.renderer.render(this.scene, this.camera);
   }
 
@@ -131,4 +137,27 @@ export class SceneComponent implements OnInit {
     this.camera.zoom = window.innerWidth / window.innerHeight / 1.7;
     this.camera.updateProjectionMatrix();
   }
+
+  pointerDown(event: PointerEvent){
+    event.preventDefault();
+    this.mouseIsDown = true;
+    this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+  }
+
+  pointerUp(event: PointerEvent){
+    event.preventDefault();
+    this.mouseIsDown = false;
+  }
+
+  onPointerMove(event: PointerEvent) {
+    event.preventDefault();
+    // do nothing when mouse is not yet available
+    if (!this.mouse) {
+      return;
+    }
+
+    this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+}
 }

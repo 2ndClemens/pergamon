@@ -1,4 +1,16 @@
-<div (touchmove)="$event.preventDefault()" style="width: 100%; height: 100%; overflow: hidden;">
+<div
+  (touchmove)="$event.preventDefault()"
+  (mousedown)="pointerDown($event)"
+  (mouseup)="pointerUp($event)"
+  (pointerdown)="pointerDown($event)"
+  (pointerup)="pointerUp($event)"
+  (pointermove)="onPointerMove($event)"
+  (touchstart)="pointerDown($event.touches[0])"
+    (touchend)="pointerUp($event)"
+    (touchmove)="onPointerMove($event.touches[0])"
+  oncontextmenu="return false;"
+  style="width: 100%; height: 100%; overflow: hidden;"
+>
   <canvas #canvas class="canvas"></canvas>
   <app-gltf-object
     *ngIf="columnPositions"
