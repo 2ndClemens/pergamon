@@ -160,4 +160,13 @@ export class SceneComponent implements OnInit {
     this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
     this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 }
+onPinch(event) {
+  // don't remove, these are important to disable gestures on iOS;
+}
+onPinchStart(event) {
+  // don't remove, these are important to disable gestures on iOS;
+}
+onPanMove(event) {
+  // don't remove, these are important to disable gestures on iOS;
+}
 }
