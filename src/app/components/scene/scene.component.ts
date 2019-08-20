@@ -21,6 +21,7 @@ export class SceneComponent implements OnInit {
   renderer: THREE.WebGLRenderer;
   // controls: MapControls;
   columnPositions: THREE.Vector3[] = [];
+  debugMessage: string;
   public mouseIsDown: boolean;
   private mouse = new THREE.Vector2(0,0);
 
@@ -138,19 +139,23 @@ export class SceneComponent implements OnInit {
     this.camera.updateProjectionMatrix();
   }
 
-  pointerDown(event: PointerEvent){
+  pointerDown(event: PointerEvent) {
+
     event.preventDefault();
     this.mouseIsDown = true;
+    this.debugMessage = 'pd:' + JSON.stringify(event.clientX);
     this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
     this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
   }
 
   pointerUp(event: PointerEvent){
+    this.debugMessage = JSON.stringify(event);
     event.preventDefault();
     this.mouseIsDown = false;
   }
 
   onPointerMove(event: PointerEvent) {
+    // this.debugMessage = JSON.stringify(event);
     event.preventDefault();
     // do nothing when mouse is not yet available
     if (!this.mouse) {
