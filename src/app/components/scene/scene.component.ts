@@ -140,8 +140,8 @@ export class SceneComponent implements OnInit {
   }
 
   pointerDown(event: PointerEvent) {
-
-    event.preventDefault();
+    this.debugMessage = JSON.stringify(event);
+    // event.preventDefault();
     this.mouseIsDown = true;
     this.debugMessage = 'pd:' + JSON.stringify(event.clientX);
     this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
