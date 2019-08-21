@@ -150,13 +150,13 @@ export class SceneComponent implements OnInit {
 
   pointerUp(event: PointerEvent){
     this.debugMessage = JSON.stringify(event);
-    event.preventDefault();
+    // event.preventDefault();
     this.mouseIsDown = false;
   }
 
   onPointerMove(event: PointerEvent) {
     // this.debugMessage = JSON.stringify(event);
-    event.preventDefault();
+    // event.preventDefault();
     // do nothing when mouse is not yet available
     if (!this.mouse) {
       return;
