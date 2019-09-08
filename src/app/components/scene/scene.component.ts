@@ -19,11 +19,13 @@ export class SceneComponent implements OnInit {
   scene = new THREE.Scene();
   camera: THREE.PerspectiveCamera;
   renderer: THREE.WebGLRenderer;
+  raycaster = new THREE.Raycaster();
   // controls: MapControls;
   columnPositions: THREE.Vector3[] = [];
   debugMessage: string;
   public mouseIsDown: boolean;
-  private mouse = new THREE.Vector2(0,0);
+  private mouse = new THREE.Vector2(0, 0);
+  private center = new THREE.Vector2(0, 0);
 
   private get canvas(): HTMLCanvasElement {
     return this.canvasRef.nativeElement;
@@ -87,7 +89,7 @@ export class SceneComponent implements OnInit {
     sky.scale.setScalar(10000);
     // sky.rotateY(180);
     sky.rotation.y = 180;
-    this.scene.add(sky);
+    // this.scene.add(sky);
     const uniforms = sky.material.uniforms;
     uniforms.turbidity.value = 10;
     uniforms.rayleigh.value = 2;
@@ -119,11 +121,36 @@ export class SceneComponent implements OnInit {
 
   animate() {
     requestAnimationFrame(this.animate.bind(this));
+    this.camera.updateMatrix();
+    this.camera.updateProjectionMatrix();
     // this.controls.update();
-    if(this.mouseIsDown){
-      this.camera.translateZ(-.2);
-      this.camera.rotateY(- this.mouse.x  / 50);
+
+    // update the picking ray with the camera and mouse position
+    this.raycaster.setFromCamera(this.center, this.camera);
+
+    // calculate objects intersecting the picking ray
+    const intersects = this.raycaster.intersectObjects(
+      this.scene.children,
+      true
+    );
+
+    if (this.mouseIsDown) {
+      if (intersects.length > 0) {
+        console.log(intersects[0].distance);
+        if (intersects[0].distance > 2) {
+          this.camera.translateZ(-0.2);
+        }
+      } else {
+        this.camera.translateZ(-0.2);
+      }
+      this.camera.rotateY(-this.mouse.x / 50);
     }
+
+    /* for (let i = 0; i < intersects.length; i++) {
+    console.log(intersects[i].distance);
+    // intersects[i].object.material.color.set(0xff0000);
+    } */
+
     this.renderer.render(this.scene, this.camera);
   }
 
@@ -137,6 +164,8 @@ export class SceneComponent implements OnInit {
     this.renderer.setSize(window.innerWidth, window.innerHeight);
     this.camera.zoom = window.innerWidth / window.innerHeight / 1.7;
     this.camera.updateProjectionMatrix();
+    // this.center.x = window.innerWidth/2;
+    // this.center.y = window.innerHeight/2;
   }
 
   pointerDown(event: PointerEvent) {
@@ -148,7 +177,7 @@ export class SceneComponent implements OnInit {
     this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
   }
 
-  pointerUp(event: PointerEvent){
+  pointerUp(event: PointerEvent) {
     this.debugMessage = JSON.stringify(event);
     // event.preventDefault();
     this.mouseIsDown = false;
@@ -164,14 +193,14 @@ export class SceneComponent implements OnInit {
 
     this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
     this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-}
-onPinch(event) {
-  // don't remove, these are important to disable gestures on iOS;
-}
-onPinchStart(event) {
-  // don't remove, these are important to disable gestures on iOS;
-}
-onPanMove(event) {
-  // don't remove, these are important to disable gestures on iOS;
-}
+  }
+  onPinch(event) {
+    // don't remove, these are important to disable gestures on iOS;
+  }
+  onPinchStart(event) {
+    // don't remove, these are important to disable gestures on iOS;
+  }
+  onPanMove(event) {
+    // don't remove, these are important to disable gestures on iOS;
+  }
 }
