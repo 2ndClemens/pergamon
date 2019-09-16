@@ -6,6 +6,7 @@ import {
   HostListener
 } from '@angular/core';
 import * as THREE from 'three';
+import { WEBVR } from 'three/examples/jsm/vr/WebVR.js';
 declare const require: any;
 const Sky: any = require('./sky')(THREE);
 // import { MapControls } from 'three/examples/jsm/controls/OrbitControls.js';
@@ -40,6 +41,7 @@ export class SceneComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
+
     for (let n = 0; n < 100; n++) {
       this.columnPositions.push(new THREE.Vector3(0, 4.335, -2.645 * n));
       this.columnPositions.push(new THREE.Vector3(10, 4.335, -2.645 * n));
@@ -52,6 +54,8 @@ export class SceneComponent implements OnInit {
       alpha: false
     });
     this.renderer.setClearColor(0xffffff, 1);
+    document.body.appendChild(WEBVR.createButton(this.renderer, null));
+    this.renderer.vr.enabled = true;
 
     this.camera = new THREE.PerspectiveCamera(
       40,
@@ -120,7 +124,7 @@ export class SceneComponent implements OnInit {
   }
 
   animate() {
-    requestAnimationFrame(this.animate.bind(this));
+    this.renderer.setAnimationLoop(this.animate.bind(this));
     this.camera.updateMatrix();
     this.camera.updateProjectionMatrix();
     // this.controls.update();
