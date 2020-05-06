@@ -69,7 +69,7 @@ export class StageComponent implements OnInit {
               this.entities[n].transforms.push({
                 rotation: { x: Math.PI, y: 0, z: 0 },
 
-                position: { x: posX, y: posY, z: posZ + k * 1.19 },
+                position: { x: posX, y: posY, z: posZ + k * 2.645 },
                 speed: { x: 0, y: 0, z: 0 },
               });
 
@@ -91,7 +91,7 @@ export class StageComponent implements OnInit {
               this.entities[n].transforms.push({
                 rotation: { x: Math.PI, y: 0, z: 0 },
 
-                position: { x: posX, y: posY, z: posZ + k * 1.19 },
+                position: { x: posX, y: posY, z: posZ + k * 2.645 },
                 speed: { x: 0, y: 0, z: 0 },
               });
 
@@ -113,7 +113,7 @@ export class StageComponent implements OnInit {
               this.entities[n].transforms.push({
                 rotation: { x: 0, y: 0, z: 0 },
 
-                position: { x: posX, y: posY, z: posZ + k * 1.19 },
+                position: { x: posX, y: posY, z: posZ + k * 2.645 },
                 speed: { x: 0, y: 0, z: 0 },
               });
 

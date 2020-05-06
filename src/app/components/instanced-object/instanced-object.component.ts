@@ -17,6 +17,7 @@ export class InstancedObjectComponent implements OnInit, OnChanges {
   @Input() src;
   @Input() mirror;
   @Input() transforms: ObjectTransform[];
+  @Input() lights = true;
   orientations;
   offsets;
   // speeds;
@@ -70,109 +71,108 @@ export class InstancedObjectComponent implements OnInit, OnChanges {
       }
 
       const loadedMaterial = gltf.scene.children[0].material;
-/*
-      const geometry = new THREE.InstancedBufferGeometry().fromGeometry(mergeGeometry);
 
-      // per instance data
-      this.instanceBuffer = new THREE.InstancedInterleavedBuffer(
-        new Float32Array(this.instances * 8),
-        8,
-        1,
-      ).setUsage(THREE.DynamicDrawUsage);
-      this.instanceBufferSpeed = new THREE.InstancedInterleavedBuffer(
-        new Float32Array(this.instances * 8),
-        8,
-        1,
-      ).setUsage(THREE.DynamicDrawUsage);
-      this.offsets = new THREE.InterleavedBufferAttribute(this.instanceBuffer, 3, 0);
-      // this.speeds = new THREE.InterleavedBufferAttribute(this.instanceBufferSpeed, 3, 0);
+      if (!this.lights) {
 
-      const vector = new THREE.Quaternion();
-      for (let i = 0, ul = this.instances; i < ul; i++) {
-        const x = this.transforms[i].position.x;
-        const y = this.transforms[i].position.y;
-        const z = this.transforms[i].position.z;
+        const geometry = new THREE.InstancedBufferGeometry().fromGeometry(mergeGeometry);
 
-        // move out at least 5 units from center in current direction
-        this.offsets.setXYZ(i, x, y, z);
+        // per instance data
+        this.instanceBuffer = new THREE.InstancedInterleavedBuffer(
+          new Float32Array(this.instances * 8),
+          8,
+          1,
+        ).setUsage(THREE.DynamicDrawUsage);
+        this.instanceBufferSpeed = new THREE.InstancedInterleavedBuffer(
+          new Float32Array(this.instances * 8),
+          8,
+          1,
+        ).setUsage(THREE.DynamicDrawUsage);
+        this.offsets = new THREE.InterleavedBufferAttribute(this.instanceBuffer, 3, 0);
+        // this.speeds = new THREE.InterleavedBufferAttribute(this.instanceBufferSpeed, 3, 0);
 
-        // this.speeds.setXYZ(i, x * 0.01, 0, z * 0.01);
-      }
+        const vector = new THREE.Quaternion();
+        for (let i = 0, ul = this.instances; i < ul; i++) {
+          const x = this.transforms[i].position.x;
+          const y = this.transforms[i].position.y;
+          const z = this.transforms[i].position.z;
 
-      geometry.setAttribute('offset', this.offsets); // per mesh translation
+          // move out at least 5 units from center in current direction
+          this.offsets.setXYZ(i, x, y, z);
 
-      this.orientations = new THREE.InterleavedBufferAttribute(this.instanceBuffer, 4, 4);
+          // this.speeds.setXYZ(i, x * 0.01, 0, z * 0.01);
+        }
 
-      for (let i = 0, ul = this.orientations.count; i < ul; i++) {
-        vector.setFromEuler(
-          new THREE.Euler(
+        geometry.setAttribute('offset', this.offsets); // per mesh translation
+
+        this.orientations = new THREE.InterleavedBufferAttribute(this.instanceBuffer, 4, 4);
+
+        for (let i = 0, ul = this.orientations.count; i < ul; i++) {
+          vector.setFromEuler(
+            new THREE.Euler(
+              this.transforms[i].rotation.x,
+              this.transforms[i].rotation.y,
+              this.transforms[i].rotation.z
+            ),
+          );
+          // vector.normalize();
+          // this.orientations.setXYZW(i, 0, vector.y, 0, 1);
+
+          this.orientations.setXYZW(i, vector.x, vector.y, vector.z, vector.w);
+          // this.orientations.setY( i, vector.y );
+        }
+
+        geometry.setAttribute('orientation', this.orientations); // per mesh orientation
+
+        // material
+        const texture = loadedMaterial.map;
+
+        if (texture) { texture.anisotropy = this.renderer.capabilities.getMaxAnisotropy(); }
+
+        const material = new THREE.RawShaderMaterial({
+          uniforms: {
+            map: { value: texture },
+          },
+          vertexShader: this.vertexShader,
+          fragmentShader: this.fragmentShader,
+          side: THREE.DoubleSide,
+          transparent: false,
+
+        });
+
+
+        const mesh = new THREE.Mesh(geometry, material);
+        mesh.frustumCulled = false;
+        this.scene.add(mesh);
+      } else {
+
+        var count = this.transforms.length;
+
+        var mesh = new THREE.InstancedMesh(mergeGeometry, loadedMaterial, count);
+
+        var dummy = new THREE.Object3D();
+
+        for (var i = 0; i < count; i++) {
+
+          dummy.position.set(
+            this.transforms[i].position.x,
+            this.transforms[i].position.y,
+            this.transforms[i].position.z,
+          );
+
+          dummy.rotation.set(
             this.transforms[i].rotation.x,
             this.transforms[i].rotation.y,
-            this.transforms[i].rotation.z
-          ),
-        );
-        // vector.normalize();
-        // this.orientations.setXYZW(i, 0, vector.y, 0, 1);
+            this.transforms[i].rotation.z,
+          );
 
-        this.orientations.setXYZW(i, vector.x, vector.y, vector.z, vector.w);
-        // this.orientations.setY( i, vector.y );
+          dummy.updateMatrix();
+
+          mesh.setMatrixAt(i, dummy.matrix);
+
+        }
+
       }
-
-      geometry.setAttribute('orientation', this.orientations); // per mesh orientation
-
-      // material
-      const texture = loadedMaterial.map;
-
-      if (texture) { texture.anisotropy = this.renderer.capabilities.getMaxAnisotropy(); }
-
-       const material = new THREE.RawShaderMaterial({
-        uniforms: {
-          map: { value: texture },
-        },
-        vertexShader: this.vertexShader,
-        fragmentShader: this.fragmentShader,
-        side: THREE.DoubleSide,
-        transparent: false,
-
-      }); */
-      
-
-/*       const mesh = new THREE.Mesh(geometry, material);
-      mesh.frustumCulled = false;
-      this.scene.add(mesh); */
-
-
-      var count = this.transforms.length;
-
-    // const geometry = new THREE.BoxGeometry();
-    // const material = new THREE.MeshStandardMaterial();
-    // material.map = loadedMaterial.map;
-
-    var mesh = new THREE.InstancedMesh(mergeGeometry, loadedMaterial, count);
-
-    var dummy = new THREE.Object3D();
-
-    for (var i = 0; i < count; i++) {
-
-      dummy.position.set(
-        this.transforms[i].position.x,
-        this.transforms[i].position.y,
-        this.transforms[i].position.z,
-      );
-
-      dummy.rotation.set(
-        this.transforms[i].rotation.x,
-        this.transforms[i].rotation.y,
-        this.transforms[i].rotation.z,
-      );
-
-      dummy.updateMatrix();
-
-      mesh.setMatrixAt(i, dummy.matrix);
-
-    }
-
-    this.scene.add(mesh);
+      this.scene.add(mesh);
     });
   }
 
