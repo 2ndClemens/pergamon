@@ -4,7 +4,10 @@ import * as THREE from 'three';
 import Stats from 'three/examples/jsm/libs/stats.module.js';
 
 import { vertexShader, fragmentShader } from '../../shader/instanced-shader';
-import { MapControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import { FirstPersonControls } from 'three/examples/jsm/controls/FirstPersonControls';
+import { MapControls } from 'three/examples/jsm/controls/OrbitControls';
+import { CannonPhysics } from 'three/examples/jsm/physics/CannonPhysics.js';
+
 import { Sky } from 'three/examples/jsm/objects/Sky';
 import { Entity } from 'src/app/models/entity';
 
@@ -22,6 +25,7 @@ export class StageComponent implements OnInit {
   renderer;
 
   controls;
+  clock;
   changeStep = 0;
 
   lastTime = 0;
@@ -34,18 +38,10 @@ export class StageComponent implements OnInit {
   fragmentShader = fragmentShader;
 
   entities: Entity[] = [
-    /*  { src: 'maxo-ms-aa-open.glb', transforms: [], static: false },
-     { src: 'maxo-ms-aa2-open.glb', transforms: [], static: false },
-     { src: 'maxo-ms-aa-closed.glb', transforms: [], static: false },
-     { src: 'maxo-ms-la-open.glb', transforms: [], static: false },
-     { src: 'maxo-ms-tv-open.glb', transforms: [], static: false },
-     { src: 'rollenfoerderer.glb', transforms: [], static: true }, */
     { src: 'capitol.glb', transforms: [], static: true, mirror: { x: true, y: true } },
     { src: 'pedistal.glb', transforms: [], static: true, mirror: { x: false, y: false } },
     { src: 'shaft.glb', transforms: [], static: true, mirror: { x: false, y: false } },
     { src: 'chamber.glb', transforms: [], static: true, mirror: { x: false, y: false } },
-    /*     { src: 'la.glb', transforms: [], static: false },
-        { src: 'floor.glb', transforms: [], static: true }, */
   ];
 
   constructor() { }
@@ -55,6 +51,7 @@ export class StageComponent implements OnInit {
   }
 
   init() {
+    this.clock = new THREE.Clock();
     for (let n = 0; n < this.entities.length; n++) {
       switch (this.entities[n].src) {
 
@@ -62,7 +59,7 @@ export class StageComponent implements OnInit {
           for (let i = 0; i < 2; i++) {
             const posX = i * 10;
             const posZ = 0;
-            const posY = 5;
+            const posY = 4.35;
             // const rotY = Math.random() * Math.PI;
 
             for (let k = 0; k < 100; k++) {
@@ -84,7 +81,7 @@ export class StageComponent implements OnInit {
           for (let i = 0; i < 2; i++) {
             const posX = i * 10;
             const posZ = 0;
-            const posY = 1;
+            const posY = .5;
             // const rotY = Math.random() * Math.PI;
 
             for (let k = 0; k < 100; k++) {
@@ -106,7 +103,7 @@ export class StageComponent implements OnInit {
           for (let i = 0; i < 2; i++) {
             const posX = i * 10;
             const posZ = 0;
-            const posY = 1;
+            const posY = .5;
             // const rotY = Math.random() * Math.PI;
 
             for (let k = 0; k < 100; k++) {
@@ -142,24 +139,6 @@ export class StageComponent implements OnInit {
 
 
             }
-            // move out at least 5 units from center in current direction
-          }
-          break;
-
-        case 'floor.glb':
-          for (let i = 0; i < 10; i++) {
-            const posX = i * 20 - 90;
-            const posZ = 0;
-            // const rotY = Math.random() * Math.PI;
-
-            for (let k = 0; k < 10; k++) {
-              this.entities[n].transforms.push({
-                rotation: { x: 0, y: 0, z: 0 },
-                position: { x: posX, y: 0, z: posZ + k * 20 - 90 },
-                speed: { x: 0, y: 0, z: 0 },
-              });
-            }
-
             // move out at least 5 units from center in current direction
           }
           break;
@@ -200,16 +179,16 @@ export class StageComponent implements OnInit {
 
     this.renderer = new THREE.WebGLRenderer();
 
-    this.controls = new MapControls(this.camera, this.renderer.domElement);
 
-    this.controls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
-    this.controls.dampingFactor = 0.05;
-    this.controls.screenSpacePanning = false;
-    this.controls.minDistance = 5;
-    this.controls.maxDistance = 200;
-    this.controls.maxPolarAngle = Math.PI / 2.015;
-    this.controls.target.set(0, 0, 60);
 
+    /*     this.controls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
+        this.controls.dampingFactor = 0.05;
+        this.controls.screenSpacePanning = false;
+        this.controls.minDistance = 5;
+        this.controls.maxDistance = 200;
+        this.controls.maxPolarAngle = Math.PI / 2.015;
+        this.controls.target.set(0, 0, 60);
+     */
 
 
 
@@ -252,7 +231,7 @@ export class StageComponent implements OnInit {
     );
     light.position.z = -parameters.distance * Math.sin(phi) * Math.cos(theta);
 
-    
+
 
     // geometry
 
@@ -268,11 +247,22 @@ export class StageComponent implements OnInit {
     this.stats = Stats();
     this.container.appendChild(this.stats.dom);
 
+    this.controls = new FirstPersonControls(this.camera, this.renderer.domElement);
+    this.controls.movementSpeed = 10;
+    this.controls.lookSpeed = 0.1;
+    this.controls.lookAt(0,0,0);
+
+    this.controls.constrainVertical = true;
+    this.controls.verticalMax = Math.PI*.55;
+    this.controls.verticalMin = Math.PI*.35;
+
+
     this.animate();
   }
 
   onWindowResize() {
     console.log('resize');
+    this.controls.handleResize();
     this.camera.aspect = window.innerWidth / window.innerHeight;
     this.camera.updateProjectionMatrix();
 
@@ -280,7 +270,8 @@ export class StageComponent implements OnInit {
   }
 
   animate() {
-    this.controls.update();
+    // this.controls.update();
+    
     requestAnimationFrame(this.animate.bind(this));
 
     this.render();
@@ -288,8 +279,9 @@ export class StageComponent implements OnInit {
   }
 
   render() {
+    
     const time = performance.now();
-
+    this.controls.update(this.clock.getDelta());
     this.renderer.render(this.scene, this.camera);
 
     const delta = (time - this.lastTime) / 500;
