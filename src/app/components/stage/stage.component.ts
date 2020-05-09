@@ -61,7 +61,6 @@ export class StageComponent implements OnInit {
 
 
     this.scene = new THREE.Scene();
-    // this.scene.background = new THREE.Color(0x333333);
 
     this.renderer = new THREE.WebGLRenderer();
 
@@ -79,9 +78,6 @@ export class StageComponent implements OnInit {
 
 
     this.skyService.makeSky(this.scene);
-
-
-    // geometry
 
     if (this.renderer.extensions.get('ANGLE_instanced_arrays') === null) {
       document.getElementById('notSupported').style.display = '';
@@ -118,8 +114,6 @@ export class StageComponent implements OnInit {
   }
 
   animate() {
-    // this.controls.update();
-
     requestAnimationFrame(this.animate.bind(this));
 
     this.render();
@@ -133,7 +127,6 @@ export class StageComponent implements OnInit {
     this.renderer.render(this.scene, this.camera);
 
     const delta = (time - this.lastTime) / 500;
-    // console.log(delta);
     this.tmpQ.set(0, this.moveQ.y * delta, 0, 1).normalize();
 
 
