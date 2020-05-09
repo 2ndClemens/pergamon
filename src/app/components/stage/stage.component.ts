@@ -8,8 +8,9 @@ import { FirstPersonControls } from 'three/examples/jsm/controls/FirstPersonCont
 import { MapControls } from 'three/examples/jsm/controls/OrbitControls';
 import { CannonPhysics } from 'three/examples/jsm/physics/CannonPhysics.js';
 
-import { Sky } from 'three/examples/jsm/objects/Sky';
 import { Entity } from 'src/app/models/entity';
+import { EntityService } from 'src/app/services/entity.service';
+import { SkyService } from 'src/app/services/sky.service';
 
 @Component({
   selector: 'pgm-stage',
@@ -18,14 +19,15 @@ import { Entity } from 'src/app/models/entity';
 })
 export class StageComponent implements OnInit {
   container;
-  stats;
+  stats: Stats;
 
-  camera;
-  scene;
-  renderer;
+  camera: THREE.PerspectiveCamera;
+  scene: THREE.Scene;
+  renderer: THREE.WebGLRenderer;
+  entities: Entity[];
 
   controls;
-  clock;
+  clock: THREE.Clock;
   changeStep = 0;
 
   lastTime = 0;
@@ -37,135 +39,19 @@ export class StageComponent implements OnInit {
   vertexShader = vertexShader;
   fragmentShader = fragmentShader;
 
-  entities: Entity[] = [
-    { src: 'capitol.glb', transforms: [], static: true, mirror: { x: true, y: true } },
-    { src: 'pedistal.glb', transforms: [], static: true, mirror: { x: false, y: false } },
-    { src: 'shaft.glb', transforms: [], static: true, mirror: { x: false, y: false } },
-    { src: 'chamber.glb', transforms: [], static: true, mirror: { x: false, y: false } },
-  ];
 
-  constructor() { }
+
+  constructor(public entityService: EntityService, public skyService: SkyService) { }
 
   ngOnInit() {
+    this.entityService.createEntities();
+    this.entities = this.entityService.getEntities();
     this.init();
   }
 
   init() {
     this.clock = new THREE.Clock();
-    for (let n = 0; n < this.entities.length; n++) {
-      switch (this.entities[n].src) {
 
-        case 'capitol.glb':
-          for (let i = 0; i < 2; i++) {
-            const posX = i * 10;
-            const posZ = 0;
-            const posY = 4.35;
-            // const rotY = Math.random() * Math.PI;
-
-            for (let k = 0; k < 100; k++) {
-              this.entities[n].transforms.push({
-                rotation: { x: Math.PI, y: 0, z: 0 },
-
-                position: { x: posX, y: posY, z: posZ + k * 2.645 },
-                speed: { x: 0, y: 0, z: 0 },
-              });
-
-
-
-            }
-            // move out at least 5 units from center in current direction
-          }
-          break;
-
-        case 'pedistal.glb':
-          for (let i = 0; i < 2; i++) {
-            const posX = i * 10;
-            const posZ = 0;
-            const posY = .5;
-            // const rotY = Math.random() * Math.PI;
-
-            for (let k = 0; k < 100; k++) {
-              this.entities[n].transforms.push({
-                rotation: { x: Math.PI, y: 0, z: 0 },
-
-                position: { x: posX, y: posY, z: posZ + k * 2.645 },
-                speed: { x: 0, y: 0, z: 0 },
-              });
-
-
-
-            }
-            // move out at least 5 units from center in current direction
-          }
-          break;
-
-        case 'shaft.glb':
-          for (let i = 0; i < 2; i++) {
-            const posX = i * 10;
-            const posZ = 0;
-            const posY = .5;
-            // const rotY = Math.random() * Math.PI;
-
-            for (let k = 0; k < 100; k++) {
-              this.entities[n].transforms.push({
-                rotation: { x: 0, y: 0, z: 0 },
-
-                position: { x: posX, y: posY, z: posZ + k * 2.645 },
-                speed: { x: 0, y: 0, z: 0 },
-              });
-
-
-
-            }
-            // move out at least 5 units from center in current direction
-          }
-          break;
-
-        case 'chamber.glb':
-          for (let i = 0; i < 1; i++) {
-            const posX = -4;
-            const posZ = 0;
-            const posY = 1;
-            // const rotY = Math.random() * Math.PI;
-
-            for (let k = 0; k < 19; k++) {
-              this.entities[n].transforms.push({
-                rotation: { x: 0, y: 0, z: 0 },
-
-                position: { x: posX, y: posY, z: posZ + 4.454 * k },
-                speed: { x: 0, y: 0, z: 0 },
-              });
-
-
-
-            }
-            // move out at least 5 units from center in current direction
-          }
-          break;
-
-
-
-        default:
-          for (let i = 0; i < 600; i++) {
-            const posX = Math.random() * 200 - 100;
-            const posZ = Math.random() * 200 - 100;
-            let speedX = 0;
-            let speedZ = 0;
-            if (Math.random() > 0.5) {
-              speedX = Math.random() * 3 - 1.5;
-            } else {
-              speedZ = Math.random() * 3 - 1.5;
-            }
-            const rotY = (Math.round(Math.random() * 4 - 2) * Math.PI) / 2;
-            this.entities[n].transforms.push({
-              rotation: { x: 0, y: rotY, z: 0 },
-              position: { x: posX, y: 0, z: posZ },
-              speed: { x: speedX, y: 0, z: speedZ },
-            });
-            // move out at least 5 units from center in current direction
-          }
-      }
-    }
     this.container = document.getElementById('container');
 
     this.camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 1000);
@@ -192,45 +78,7 @@ export class StageComponent implements OnInit {
 
 
 
-    const light = new THREE.DirectionalLight(0xffffff, 0.8);
-    // light.rotateY(Math.PI/2);
-    // scene.add(light);
-    // const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
-    // scene.add(directionalLight);
-    light.target.position.set(0, 0, 0);
-    const hemilight = new THREE.HemisphereLight(0xffffbb, 0x080820, 1.6);
-    this.scene.add(hemilight);
-
-    this.scene.add(light);
-
-    const sky = new Sky();
-    sky.scale.setScalar(10000);
-    // sky.rotateY(180);
-    // sky.rotation.y = 180;
-    this.scene.add(sky);
-    const uniforms = sky.material.uniforms;
-    uniforms.turbidity.value = 10;
-    uniforms.rayleigh.value = 2;
-    uniforms.luminance.value = 1;
-    uniforms.mieCoefficient.value = 0.005;
-    uniforms.mieDirectionalG.value = 0.8;
-    const parameters = {
-      distance: 400,
-      inclination: 0.15,
-      azimuth: 0.3
-    };
-
-    const theta = Math.PI * (parameters.inclination - 0.5);
-    const phi = 2 * Math.PI * (parameters.azimuth - 0.5);
-
-    light.position.x = parameters.distance * Math.cos(phi);
-    light.position.y = parameters.distance * Math.sin(phi) * Math.sin(theta);
-    light.position.z = parameters.distance * Math.sin(phi) * Math.cos(theta);
-    sky.material.uniforms.sunPosition.value = light.position.copy(
-      light.position
-    );
-    light.position.z = -parameters.distance * Math.sin(phi) * Math.cos(theta);
-
+    this.skyService.makeSky(this.scene);
 
 
     // geometry
@@ -250,11 +98,11 @@ export class StageComponent implements OnInit {
     this.controls = new FirstPersonControls(this.camera, this.renderer.domElement);
     this.controls.movementSpeed = 10;
     this.controls.lookSpeed = 0.1;
-    this.controls.lookAt(0,0,0);
+    this.controls.lookAt(0, 0, 0);
 
     this.controls.constrainVertical = true;
-    this.controls.verticalMax = Math.PI*.55;
-    this.controls.verticalMin = Math.PI*.35;
+    this.controls.verticalMax = Math.PI * .55;
+    this.controls.verticalMin = Math.PI * .35;
 
 
     this.animate();
@@ -271,7 +119,7 @@ export class StageComponent implements OnInit {
 
   animate() {
     // this.controls.update();
-    
+
     requestAnimationFrame(this.animate.bind(this));
 
     this.render();
@@ -279,7 +127,7 @@ export class StageComponent implements OnInit {
   }
 
   render() {
-    
+
     const time = performance.now();
     this.controls.update(this.clock.getDelta());
     this.renderer.render(this.scene, this.camera);
@@ -288,64 +136,7 @@ export class StageComponent implements OnInit {
     // console.log(delta);
     this.tmpQ.set(0, this.moveQ.y * delta, 0, 1).normalize();
 
-    for (let n = 0; n < this.entities.length; n++) {
-      if (!this.entities[n].static) {
-        for (let i = 0; i < this.entities[n].transforms.length; i++) {
-          if (
-            this.entities[n].transforms[i].position.x > 100 ||
-            this.entities[n].transforms[i].position.x < -100
-          ) {
-            if (this.entities[n].transforms[i].position.x > 100) {
-              this.entities[n].transforms[i].position.x = 100;
-            }
-            if (this.entities[n].transforms[i].position.x < -100) {
-              this.entities[n].transforms[i].position.x = -100;
-            }
 
-            this.entities[n].transforms[i].speed.x = -this.entities[n].transforms[i].speed.x;
-          }
-          if (
-            this.entities[n].transforms[i].position.z > 100 ||
-            this.entities[n].transforms[i].position.z < -100
-          ) {
-            if (this.entities[n].transforms[i].position.z > 100) {
-              this.entities[n].transforms[i].position.z = 100;
-            }
-            if (this.entities[n].transforms[i].position.z < -100) {
-              this.entities[n].transforms[i].position.z = -100;
-            }
-            this.entities[n].transforms[i].speed.z = -this.entities[n].transforms[i].speed.z;
-          }
-
-          this.entities[n].transforms[i].position.x +=
-            this.entities[n].transforms[i].speed.x * delta;
-          this.entities[n].transforms[i].position.z +=
-            this.entities[n].transforms[i].speed.z * delta;
-        }
-      }
-    }
-
-    /* for (let i = 0, ul = this.orientations.count; i < ul; i++) {
-      const index = i * this.instanceBuffer.stride + this.orientations.offset;
-      this.currentQ.set(
-        this.instanceBuffer.array[index],
-        this.instanceBuffer.array[index + 1],
-        this.instanceBuffer.array[index + 2],
-        this.instanceBuffer.array[index + 3],
-      );
-      this.currentQ.multiply(this.tmpQ);
-
-      this.orientations.setXYZW(
-        i,
-        this.currentQ.x,
-        this.currentQ.y,
-        this.currentQ.z,
-        this.currentQ.w,
-      );
-
-      this.instanceBuffer.needsUpdate = true;
-
-    } */
     this.lastTime = time;
     this.changeStep += 1;
   }
