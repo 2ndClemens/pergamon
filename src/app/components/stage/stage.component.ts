@@ -3,7 +3,6 @@ import * as THREE from 'three';
 
 import Stats from 'three/examples/jsm/libs/stats.module.js';
 
-import { vertexShader, fragmentShader } from '../../shader/instanced-shader';
 import { FirstPersonControls } from 'three/examples/jsm/controls/FirstPersonControls';
 import { MapControls } from 'three/examples/jsm/controls/OrbitControls';
 import { CannonPhysics } from 'three/examples/jsm/physics/CannonPhysics.js';
@@ -28,16 +27,6 @@ export class StageComponent implements OnInit {
 
   controls;
   clock: THREE.Clock;
-  changeStep = 0;
-
-  lastTime = 0;
-  instances = 50;
-
-  moveQ = new THREE.Quaternion(0.5, 0.5, 0.5, 0.0).normalize();
-  tmpQ = new THREE.Quaternion();
-  currentQ = new THREE.Quaternion();
-  vertexShader = vertexShader;
-  fragmentShader = fragmentShader;
 
 
 
@@ -117,20 +106,12 @@ export class StageComponent implements OnInit {
     requestAnimationFrame(this.animate.bind(this));
 
     this.render();
-    this.stats.update();
+
   }
 
   render() {
-
-    const time = performance.now();
+    this.stats.update();
     this.controls.update(this.clock.getDelta());
     this.renderer.render(this.scene, this.camera);
-
-    const delta = (time - this.lastTime) / 500;
-    this.tmpQ.set(0, this.moveQ.y * delta, 0, 1).normalize();
-
-
-    this.lastTime = time;
-    this.changeStep += 1;
   }
 }
