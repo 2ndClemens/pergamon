@@ -11,7 +11,7 @@ export class SkyService {
   public makeSky(scene) {
     const light = new THREE.DirectionalLight(0xffffff, 0.8);
     light.target.position.set(0, 0, 0);
-    const hemilight = new THREE.HemisphereLight(0xffffbb, 0x080820, 1.1);
+    const hemilight = new THREE.HemisphereLight(0xffffbb, 0x645f55, 0.8);
     scene.add(hemilight);
 
     scene.add(light);

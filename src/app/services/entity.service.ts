@@ -22,7 +22,7 @@ export class EntityService {
           for (let i = 0; i < 2; i++) {
             const posX = i * 10;
             const posZ = 0;
-            const posY = 4.35;
+            const posY = 4.35 + 0.225;
             // const rotY = Math.random() * Math.PI;
 
             for (let k = 0; k < 100; k++) {
@@ -44,7 +44,7 @@ export class EntityService {
           for (let i = 0; i < 2; i++) {
             const posX = i * 10;
             const posZ = 0;
-            const posY = .5;
+            const posY = .5 + 0.225;
             // const rotY = Math.random() * Math.PI;
 
             for (let k = 0; k < 100; k++) {
@@ -66,7 +66,7 @@ export class EntityService {
           for (let i = 0; i < 2; i++) {
             const posX = i * 10;
             const posZ = 0;
-            const posY = .5;
+            const posY = .5  + 0.225;
             // const rotY = Math.random() * Math.PI;
 
             for (let k = 0; k < 100; k++) {
@@ -88,10 +88,10 @@ export class EntityService {
           for (let i = 0; i < 1; i++) {
             const posX = -4;
             const posZ = 0;
-            const posY = 1;
+            const posY = 0 + 0.225;
             // const rotY = Math.random() * Math.PI;
 
-            for (let k = 0; k < 19; k++) {
+            for (let k = 0; k < 39; k++) {
               entities[n].transforms.push({
                 rotation: { x: 0, y: 0, z: 0 },
 
@@ -110,7 +110,7 @@ export class EntityService {
           for (let i = 0; i < 1; i++) {
             const posX = 0;
             const posZ = 0;
-            const posY = 0;
+            const posY = 0 + 0.225;
             // const rotY = Math.random() * Math.PI;
 
             for (let k = 0; k < 1; k++) {
@@ -132,7 +132,7 @@ export class EntityService {
           for (let i = 0; i < 1; i++) {
             const posX = 0;
             const posZ = 0;
-            const posY = 4.35;
+            const posY = 4.35 + 0.225;
             // const rotY = Math.random() * Math.PI;
 
             for (let k = 0; k < 1; k++) {
