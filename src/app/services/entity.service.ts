@@ -128,6 +128,28 @@ export class EntityService {
           }
           break;
 
+          case 'architrave.glb':
+          for (let i = 0; i < 1; i++) {
+            const posX = 0;
+            const posZ = 0;
+            const posY = 4.35;
+            // const rotY = Math.random() * Math.PI;
+
+            for (let k = 0; k < 1; k++) {
+              entities[n].transforms.push({
+                rotation: { x: 0, y: 0, z: 0 },
+
+                position: { x: posX, y: posY, z: posZ },
+                speed: { x: 0, y: 0, z: 0 },
+              });
+
+
+
+            }
+            // move out at least 5 units from center in current direction
+          }
+          break;
+
         default:
           for (let i = 0; i < 1; i++) {
             const posX = 0;
