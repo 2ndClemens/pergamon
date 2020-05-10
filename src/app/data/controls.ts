@@ -4,5 +4,8 @@ export let CONTROLS: ControlState = {
     forward: false,
     backwards: false,
     left: false,
-    right: false
+    right: false,
+    mouseIsDown: false,
+    mouseX: 0,
+    mouseY: 0
 };

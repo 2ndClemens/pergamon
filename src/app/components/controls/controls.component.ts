@@ -13,47 +13,69 @@ export class ControlsComponent implements OnInit {
   @HostListener('document:mousedown', ['$event'])
   onMouseDown(ev: MouseEvent) {
     ev.preventDefault();
-    this.controlState.forward = true;
+    // this.controlState.forward = true;
+    this.controlState.mouseIsDown = true;
+    this.controlState.mouseX = (ev.clientX / window.innerWidth - .5) * 2;
+    this.controlState.mouseY = (ev.clientY / window.innerHeight - .5) * 2;
+    // console.log(this.controlState.mouseX);
+    // console.log(ev.clientX)
+  }
+
+  @HostListener('document:mousemove', ['$event'])
+  onMouseMove(ev: MouseEvent) {
+    ev.preventDefault();
+    this.controlState.mouseX = (ev.clientX / window.innerWidth - .5) * 2;
+    this.controlState.mouseY = (ev.clientY / window.innerHeight - .5) * 2;
+    // console.log(this.controlState.mouseX);
   }
 
   @HostListener('document:mouseup', ['$event'])
   onMouseUp(ev: MouseEvent) {
     ev.preventDefault();
-    this.controlState.forward = false;
+    this.controlState.mouseIsDown = false;
   }
 
-  @HostListener('document:pointerdown', ['$event'])
-  onPointerDown(ev: PointerEvent) {
+  @HostListener('document:touchstart', ['$event'])
+  onPointerDown(ev: TouchEvent) {
     // ev.preventDefault();
-    this.controlState.forward = true;
+    this.controlState.mouseIsDown = true;
+    this.controlState.mouseX = (ev.touches[0].clientX / window.innerWidth - .5) * 2;
+    this.controlState.mouseY = (ev.touches[0].clientY / window.innerHeight - .5) * 2;
   }
 
-  @HostListener('document:pointerup', ['$event'])
-  onPointerUp(ev: PointerEvent) {
-    ev.preventDefault();
-    this.controlState.forward = false;
+  @HostListener('document:touchmove', ['$event'])
+  onPointerMove(ev: TouchEvent) {
+    // ev.preventDefault();
+    // console.log(ev);
+    this.controlState.mouseX = (ev.touches[0].clientX / window.innerWidth - .5) * 2;
+    this.controlState.mouseY = (ev.touches[0].clientY / window.innerHeight - .5) * 2;
+    // console.log(this.controlState.mouseX);
   }
 
   @HostListener('document:touchend', ['$event'])
-  onTouchEnd(ev: DragEvent) {
+  onTouchEnd(ev: TouchEvent) {
     // ev.preventDefault();
-    this.controlState.forward = false;
+    this.controlState.mouseIsDown = false;
   }
- 
+
   @HostListener('document:keydown', ['$event'])
   onKeyDown(ev: KeyboardEvent) {
     console.log(`The user just pressed ${ev.key}!`);
-    switch (ev.key) {
-      case 'w':
+    switch (ev.keyCode) {
+      case 38: /*up*/
+      case 87: /*W*/
         this.controlState.forward = true;
         break;
-      case 's':
+      case 40: /*down*/
+      case 83: /*S*/
         this.controlState.backwards = true;
         break;
-      case 'a':
+      case 37: /*left*/
+      case 65: /*A*/
         this.controlState.left = true;
         break;
-      case 'd':
+      case 39: /*right*/
+      case 68: /*D*/
         this.controlState.right = true;
         break;
     }
@@ -62,17 +84,21 @@ export class ControlsComponent implements OnInit {
   @HostListener('document:keyup', ['$event'])
   onKeyUp(ev: KeyboardEvent) {
     console.log(`The user just released ${ev.key}!`);
-    switch (ev.key) {
-      case 'w':
+    switch (ev.keyCode) {
+      case 38: /*up*/
+      case 87: /*W*/
         this.controlState.forward = false;
         break;
-      case 's':
+      case 40: /*down*/
+      case 83: /*S*/
         this.controlState.backwards = false;
         break;
-      case 'a':
+      case 37: /*left*/
+      case 65: /*A*/
         this.controlState.left = false;
         break;
-      case 'd':
+      case 39: /*right*/
+      case 68: /*D*/
         this.controlState.right = false;
         break;
     }
