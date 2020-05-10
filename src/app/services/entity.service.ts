@@ -106,49 +106,50 @@ export class EntityService {
           }
           break;
 
-          case 'road.glb':
-            for (let i = 0; i < 1; i++) {
-              const posX = 0;
-              const posZ = 0;
-              const posY = 0;
-              // const rotY = Math.random() * Math.PI;
-  
-              for (let k = 0; k < 1; k++) {
-                entities[n].transforms.push({
-                  rotation: { x: 0, y: 0, z: 0 },
-  
-                  position: { x: posX, y: posY, z: posZ},
-                  speed: { x: 0, y: 0, z: 0 },
-                });
-  
-  
-  
-              }
-              // move out at least 5 units from center in current direction
+        case 'roof.glb':
+          for (let i = 0; i < 1; i++) {
+            const posX = 0;
+            const posZ = 0;
+            const posY = 0;
+            // const rotY = Math.random() * Math.PI;
+
+            for (let k = 0; k < 1; k++) {
+              entities[n].transforms.push({
+                rotation: { x: 0, y: 0, z: 0 },
+
+                position: { x: posX, y: posY, z: posZ },
+                speed: { x: 0, y: 0, z: 0 },
+              });
+
+
+
             }
-            break;
-
-
-
-        default:
-          for (let i = 0; i < 600; i++) {
-            const posX = Math.random() * 200 - 100;
-            const posZ = Math.random() * 200 - 100;
-            let speedX = 0;
-            let speedZ = 0;
-            if (Math.random() > 0.5) {
-              speedX = Math.random() * 3 - 1.5;
-            } else {
-              speedZ = Math.random() * 3 - 1.5;
-            }
-            const rotY = (Math.round(Math.random() * 4 - 2) * Math.PI) / 2;
-            entities[n].transforms.push({
-              rotation: { x: 0, y: rotY, z: 0 },
-              position: { x: posX, y: 0, z: posZ },
-              speed: { x: speedX, y: 0, z: speedZ },
-            });
             // move out at least 5 units from center in current direction
           }
+          break;
+
+        default:
+          for (let i = 0; i < 1; i++) {
+            const posX = 0;
+            const posZ = 0;
+            const posY = 0;
+            // const rotY = Math.random() * Math.PI;
+
+            for (let k = 0; k < 1; k++) {
+              entities[n].transforms.push({
+                rotation: { x: 0, y: 0, z: 0 },
+
+                position: { x: posX, y: posY, z: posZ },
+                speed: { x: 0, y: 0, z: 0 },
+              });
+
+
+
+            }
+            // move out at least 5 units from center in current direction
+          }
+          break;
+
       }
     }
   }
