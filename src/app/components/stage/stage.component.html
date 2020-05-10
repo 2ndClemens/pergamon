@@ -1,6 +1,6 @@
-<div id="container" (window:resize)="onWindowResize();"></div>
-<pgm-controls></pgm-controls>
-<div style="position: absolute; top: 20px; right: 20px;">{{camera.position.x}}</div>
+<div id="container" (window:resize)="onWindowResize();" draggable="false"></div>
+<pgm-controls draggable="false"></pgm-controls>
+<!-- <div  draggable="false" style="position: absolute; top: 20px; right: 20px;">{{camera.position.x}}</div> -->
 
 <pgm-instanced-object *ngFor="let entity of entities" [scene]="scene" [renderer]="renderer" [src]="entity.src"
   [transforms]="entity.transforms" [mirror]="entity.mirror" [changeStep]="entity.static === true? 0 : changeStep">

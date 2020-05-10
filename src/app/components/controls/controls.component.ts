@@ -10,6 +10,36 @@ import { ControlStateService } from 'src/app/services/control-state.service';
 export class ControlsComponent implements OnInit {
   controlState: ControlState
 
+  @HostListener('document:mousedown', ['$event'])
+  onMouseDown(ev: MouseEvent) {
+    ev.preventDefault();
+    this.controlState.forward = true;
+  }
+
+  @HostListener('document:mouseup', ['$event'])
+  onMouseUp(ev: MouseEvent) {
+    ev.preventDefault();
+    this.controlState.forward = false;
+  }
+
+  @HostListener('document:pointerdown', ['$event'])
+  onPointerDown(ev: PointerEvent) {
+    // ev.preventDefault();
+    this.controlState.forward = true;
+  }
+
+  @HostListener('document:pointerup', ['$event'])
+  onPointerUp(ev: PointerEvent) {
+    ev.preventDefault();
+    this.controlState.forward = false;
+  }
+
+  @HostListener('document:dragend', ['$event'])
+  onDragEnd(ev: DragEvent) {
+    ev.preventDefault();
+    this.controlState.forward = false;
+  }
+ 
   @HostListener('document:keydown', ['$event'])
   onKeyDown(ev: KeyboardEvent) {
     console.log(`The user just pressed ${ev.key}!`);
