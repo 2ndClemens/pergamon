@@ -48,6 +48,7 @@ export class StageComponent implements OnInit {
     this.camera.position.x = 5;
     this.camera.position.y = 1.6;
     this.camera.position.z = -5;
+    // this.camera.rotation.y = Math.PI;
 
 
     this.scene = new THREE.Scene();
