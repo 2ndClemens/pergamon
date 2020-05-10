@@ -25,6 +25,7 @@ export class StageComponent implements OnInit {
   scene: THREE.Scene;
   renderer: THREE.WebGLRenderer;
   entities: Entity[];
+  deltaTime = 1;
 
   // controls;
   clock: THREE.Clock;
@@ -82,14 +83,14 @@ export class StageComponent implements OnInit {
     this.stats = Stats();
     this.container.appendChild(this.stats.dom);
 
-/*     this.controls = new FirstPersonControls(this.camera, this.renderer.domElement);
-    this.controls.movementSpeed = 10;
-    this.controls.lookSpeed = 0.1;
-    this.controls.lookAt(0, 0, 0);
-
-    this.controls.constrainVertical = true;
-    this.controls.verticalMax = Math.PI * .55;
-    this.controls.verticalMin = Math.PI * .35; */
+    /*     this.controls = new FirstPersonControls(this.camera, this.renderer.domElement);
+        this.controls.movementSpeed = 10;
+        this.controls.lookSpeed = 0.1;
+        this.controls.lookAt(0, 0, 0);
+    
+        this.controls.constrainVertical = true;
+        this.controls.verticalMax = Math.PI * .55;
+        this.controls.verticalMin = Math.PI * .35; */
 
 
     this.animate();
@@ -113,8 +114,8 @@ export class StageComponent implements OnInit {
 
   render() {
     this.stats.update();
-    // this.controls.update(this.clock.getDelta());
-    this.cameraPositionService.updateCamera(this.camera);
+    this. deltaTime = this.clock.getDelta();
+    this.cameraPositionService.updateCamera(this.camera, this.deltaTime * 30);
     this.renderer.render(this.scene, this.camera);
   }
 }
