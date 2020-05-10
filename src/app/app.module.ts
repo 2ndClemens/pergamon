@@ -5,12 +5,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { StageComponent } from './components/stage/stage.component';
 import { InstancedObjectComponent } from './components/instanced-object/instanced-object.component';
+import { ControlsComponent } from './components/controls/controls.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     StageComponent,
-    InstancedObjectComponent
+    InstancedObjectComponent,
+    ControlsComponent
   ],
   imports: [
     BrowserModule,
