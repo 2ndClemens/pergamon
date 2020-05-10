@@ -34,9 +34,9 @@ export class ControlsComponent implements OnInit {
     this.controlState.forward = false;
   }
 
-  @HostListener('document:dragend', ['$event'])
-  onDragEnd(ev: DragEvent) {
-    ev.preventDefault();
+  @HostListener('document:touchend', ['$event'])
+  onTouchEnd(ev: DragEvent) {
+    // ev.preventDefault();
     this.controlState.forward = false;
   }
  
