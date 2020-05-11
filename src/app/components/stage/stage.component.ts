@@ -106,9 +106,10 @@ export class StageComponent implements OnInit {
   }
 
   animate() {
+    this.render();
     requestAnimationFrame(this.animate.bind(this));
 
-    this.render();
+    
 
   }
 

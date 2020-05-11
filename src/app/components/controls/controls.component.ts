@@ -60,7 +60,7 @@ export class ControlsComponent implements OnInit {
 
   @HostListener('document:keydown', ['$event'])
   onKeyDown(ev: KeyboardEvent) {
-    console.log(`The user just pressed ${ev.key}!`);
+    // console.log(`The user just pressed ${ev.key}!`);
     switch (ev.keyCode) {
       case 38: /*up*/
       case 87: /*W*/
@@ -83,7 +83,7 @@ export class ControlsComponent implements OnInit {
 
   @HostListener('document:keyup', ['$event'])
   onKeyUp(ev: KeyboardEvent) {
-    console.log(`The user just released ${ev.key}!`);
+    // console.log(`The user just released ${ev.key}!`);
     switch (ev.keyCode) {
       case 38: /*up*/
       case 87: /*W*/
