@@ -21,7 +21,7 @@ export class EntityService {
         case 'capitol.glb':
           for (let i = 0; i < 2; i++) {
             const posX = i * 10;
-            const posZ = 0;
+            const posZ = 2.645 * 4;
             const posY = 4.35 + 0.225;
             // const rotY = Math.random() * Math.PI;
 
@@ -43,7 +43,7 @@ export class EntityService {
         case 'pedistal.glb':
           for (let i = 0; i < 2; i++) {
             const posX = i * 10;
-            const posZ = 0;
+            const posZ = 2.645 * 4;
             const posY = .5 + 0.225;
             // const rotY = Math.random() * Math.PI;
 
@@ -65,7 +65,7 @@ export class EntityService {
         case 'shaft.glb':
           for (let i = 0; i < 2; i++) {
             const posX = i * 10;
-            const posZ = 0;
+            const posZ = 2.645 * 4;
             const posY = .5  + 0.225;
             // const rotY = Math.random() * Math.PI;
 
@@ -86,7 +86,7 @@ export class EntityService {
 
         case 'chamber.glb':
           for (let i = 0; i < 1; i++) {
-            const posX = -4;
+            const posX = -5.2;
             const posZ = 0;
             const posY = 0 + 0.225;
             // const rotY = Math.random() * Math.PI;
@@ -131,7 +131,7 @@ export class EntityService {
           case 'architrave.glb':
           for (let i = 0; i < 1; i++) {
             const posX = 0;
-            const posZ = 0;
+            const posZ = 10;
             const posY = 4.35 + 0.225;
             // const rotY = Math.random() * Math.PI;
 
