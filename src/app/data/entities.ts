@@ -7,6 +7,7 @@ export let ENTITIES: Entity[] = [
     { src: 'chamber.glb', transforms: [], static: true, mirror: { x: false, y: false } },
     { src: 'road.glb', transforms: [], static: true, mirror: { x: false, y: false } },
     { src: 'stairs.glb', transforms: [], static: true, mirror: { x: false, y: false } },
+    { src: 'portal-pillar.glb', transforms: [], static: true, mirror: { x: false, y: false } },
     { src: 'roof.glb', transforms: [], static: true, mirror: { x: false, y: false } },
     { src: 'architrave.glb', transforms: [], static: true, mirror: { x: false, y: false } },
 

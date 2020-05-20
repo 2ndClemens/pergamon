@@ -66,7 +66,7 @@ export class EntityService {
           for (let i = 0; i < 2; i++) {
             const posX = i * 10;
             const posZ = 2.645 * 4;
-            const posY = .5  + 0.225;
+            const posY = .5 + 0.225;
             // const rotY = Math.random() * Math.PI;
 
             for (let k = 0; k < 100; k++) {
@@ -128,26 +128,29 @@ export class EntityService {
           }
           break;
 
-          case 'architrave.glb':
-          for (let i = 0; i < 1; i++) {
-            const posX = 0;
-            const posZ = 10;
-            const posY = 4.35 + 0.225;
-            // const rotY = Math.random() * Math.PI;
+        
 
-            for (let k = 0; k < 1; k++) {
-              entities[n].transforms.push({
-                rotation: { x: 0, y: 0, z: 0 },
+        case 'portal-pillar.glb':
 
-                position: { x: posX, y: posY, z: posZ },
-                speed: { x: 0, y: 0, z: 0 },
-              });
+          entities[n].transforms.push({
+            rotation: { x: 0, y: -Math.PI / 4, z: 0 },
+
+            position: { x: 2.582, y: -2.25, z: 15.6291 },
+            speed: { x: 0, y: 0, z: 0 },
+          });
+
+          entities[n].transforms.push({
+            rotation: { x: 0, y: Math.PI / 4 * 3, z: 0 },
+
+            position: { x: 5.6107, y: -2.25, z: 18.3544 },
+            speed: { x: 0, y: 0, z: 0 },
+          });
 
 
 
-            }
-            // move out at least 5 units from center in current direction
-          }
+
+          // move out at least 5 units from center in current direction
+
           break;
 
         default:
