@@ -49,6 +49,7 @@ export class StageComponent implements OnInit {
     this.camera.position.x = 5;
     this.camera.position.y = 1.6;
     this.camera.position.z = -5;
+    this.camera.matrixAutoUpdate = false;
     // this.camera.rotation.y = Math.PI;
 
 
@@ -117,6 +118,8 @@ export class StageComponent implements OnInit {
     this.stats.update();
     this. deltaTime = this.clock.getDelta();
     this.cameraPositionService.updateCamera(this.camera, this.deltaTime * 30);
+    // this.camera.updateProjectionMatrix();
+    this.camera.updateMatrix();
     this.renderer.render(this.scene, this.camera);
   }
 }

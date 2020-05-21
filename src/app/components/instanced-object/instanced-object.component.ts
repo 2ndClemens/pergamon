@@ -142,6 +142,8 @@ export class InstancedObjectComponent implements OnInit, OnChanges {
 
         const mesh = new THREE.Mesh(geometry, material);
         mesh.frustumCulled = false;
+        mesh.matrixAutoUpdate = false;
+        mesh.updateMatrix();
         this.scene.add(mesh);
       } else {
 
@@ -172,6 +174,8 @@ export class InstancedObjectComponent implements OnInit, OnChanges {
         }
 
       }
+      mesh.matrixAutoUpdate = false;
+      mesh.updateMatrix();
       this.scene.add(mesh);
     });
   }
