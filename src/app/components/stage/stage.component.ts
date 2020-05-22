@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ɵPlayer } from '@angular/core';
 import * as THREE from 'three';
+import * as YUKA from 'yuka';
+import { Player } from '../Player.js';
 
 import Stats from 'three/examples/jsm/libs/stats.module.js';
 
@@ -26,6 +28,9 @@ export class StageComponent implements OnInit {
   renderer: THREE.WebGLRenderer;
   entities: Entity[];
   deltaTime = 1;
+  entityManager: YUKA.EntityManager;
+  time: YUKA.time;
+  player: Player;
 
   // controls;
   clock: THREE.Clock;
@@ -42,13 +47,15 @@ export class StageComponent implements OnInit {
 
   init() {
     this.clock = new THREE.Clock();
+    this.entityManager = new YUKA.EntityManager();
+    this.time = new YUKA.Time();
 
     this.container = document.getElementById('container');
 
     this.camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 1000);
-    this.camera.position.x = 5;
-    this.camera.position.y = 1.6;
-    this.camera.position.z = -5;
+    /*    this.camera.position.x = 5;
+       this.camera.position.y = 1.6;
+       this.camera.position.z = -5; */
     this.camera.matrixAutoUpdate = false;
     // this.camera.rotation.y = Math.PI;
 
@@ -93,6 +100,30 @@ export class StageComponent implements OnInit {
         this.controls.verticalMax = Math.PI * .55;
         this.controls.verticalMin = Math.PI * .35; */
 
+    this.player = new Player();
+    const loader2 = new YUKA.NavMeshLoader();
+    loader2.load('./assets/models/navmesh.glb', { epsilonCoplanarTest: 0.25 }).then((navMesh) => {
+
+      // visualize convex regions
+
+      // const navMeshGroup = createConvexRegionHelper( navMesh );
+      // scene.add( navMeshGroup );
+
+      this.player.navMesh = navMesh;
+      this.player.head.setRenderComponent(this.camera, this.sync);
+
+      this.player.position.set(5, 1.6, - 5);
+      this.entityManager.add(this.player);
+
+      // const loadingScreen = document.getElementById( 'loading-screen' );
+
+      // loadingScreen.classList.add( 'fade-out' );
+      // loadingScreen.addEventListener( 'transitionend', onTransitionEnd );
+
+      // animate();
+
+    });
+
 
     this.animate();
   }
@@ -107,19 +138,44 @@ export class StageComponent implements OnInit {
   }
 
   animate() {
-    this.render();
     requestAnimationFrame(this.animate.bind(this));
+    this.render();
 
-    
+
+
 
   }
 
   render() {
     this.stats.update();
-    this. deltaTime = this.clock.getDelta();
-    this.cameraPositionService.updateCamera(this.camera, this.deltaTime * 30);
-    // this.camera.updateProjectionMatrix();
+    // this.deltaTime = this.clock.getDelta();
+    const delta = this.time.update().getDelta();
+    this.cameraPositionService.updateCamera(this.player, delta * 30);
+    
+    this.entityManager.update(delta);
+        this.camera.position.x = this.player.position.x;
+        this.camera.position.y = this.player.position.y;
+        this.camera.position.z = this.player.position.z;
+        this.camera.rotation.x = this.player.rotation.x;
+        this.camera.rotation.y = this.player.rotation.y;
+        this.camera.rotation.z = this.player.rotation.z;
+
+    // console.log(this.player.position.x);
+
+
+
+    // controls.update( delta );
+
+
+
+    this.camera.updateProjectionMatrix();
     this.camera.updateMatrix();
     this.renderer.render(this.scene, this.camera);
+  }
+
+  sync(entity, renderComponent) {
+
+    // renderComponent.matrixWorld.copy(entity.worldMatrix);
+
   }
 }

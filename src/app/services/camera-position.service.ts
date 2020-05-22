@@ -1,40 +1,51 @@
 import { Injectable } from '@angular/core';
 import * as THREE from 'three';
 import { ControlStateService } from './control-state.service';
+import { Vector3 } from 'yuka';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CameraPositionService {
+  direction = new Vector3();
 
   constructor(public controlStateService: ControlStateService) { }
 
 
-  public updateCamera(camera: THREE.PerspectiveCamera, deltaTime: number) {
-    const state = this.controlStateService.getControlState()
+  public updateCamera(player: any, deltaTime: number) {
+    const state = this.controlStateService.getControlState();
+
+    //player.getDirection(this.direction);
+
+    //console.log(this.direction);
+    this.direction.x = Math.sin(player.rotation.y);
+    this.direction.z = Math.cos(player.rotation.y);
+
     if (state.forward === true) {
-      camera.translateZ(-.2 * deltaTime);
+      player.position.z -= this.direction.z / 3 * deltaTime;
+      player.position.x -= this.direction.x / 3 * deltaTime;
     }
     if (state.backwards === true) {
-      camera.translateZ(.2 * deltaTime);
+      player.position.z += this.direction.z / 3 * deltaTime;
+      player.position.x += this.direction.x / 3 * deltaTime;
     }
     if (state.right === true) {
-      camera.rotation.y -= 6 * Math.PI / 360 * deltaTime;
+      player.rotation.y -= 6 * Math.PI / 360 * deltaTime;
     }
     if (state.left === true) {
-      camera.rotation.y += 6 * Math.PI / 360 * deltaTime;
+      player.rotation.y += 6 * Math.PI / 360 * deltaTime;
     }
 
     if (state.mouseIsDown === true) {
-      camera.translateZ(-.2 * deltaTime);
-      camera.rotation.y += -state.mouseX * 3 * Math.PI / 360 * deltaTime;
+      player.position.z += (-.2 * deltaTime);
+      player.rotation.y += -state.mouseX * 3 * Math.PI / 360 * deltaTime;
     }
 
-    if (camera.position.x < 2) {
-      camera.position.x = 2;
+    /* if (player.position.x < 2) {
+      player.position.x = 2;
     }
-    if (camera.position.x > 8) {
-      camera.position.x = 8;
-    }
+    if (player.position.x > 8) {
+      player.position.x = 8;
+    } */
   }
 }

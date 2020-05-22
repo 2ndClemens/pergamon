@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import * as THREE from 'three';
+
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { vertexShader, fragmentShader } from '../../shader/instanced-shader';
 import { ObjectTransform } from 'src/app/models/object-transform';
@@ -178,6 +179,8 @@ export class InstancedObjectComponent implements OnInit, OnChanges {
       mesh.updateMatrix();
       this.scene.add(mesh);
     });
+
+    
   }
 
   flipNormals(geometry) {
