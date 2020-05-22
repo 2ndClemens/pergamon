@@ -112,7 +112,7 @@ export class StageComponent implements OnInit {
       this.player.navMesh = navMesh;
       this.player.head.setRenderComponent(this.camera, this.sync);
 
-      this.player.position.set(5, 1.6, - 5);
+      this.player.position.set(5, 0, - 5);
       this.entityManager.add(this.player);
 
       // const loadingScreen = document.getElementById( 'loading-screen' );
@@ -154,7 +154,7 @@ export class StageComponent implements OnInit {
     
     this.entityManager.update(delta);
         this.camera.position.x = this.player.position.x;
-        this.camera.position.y = this.player.position.y;
+        this.camera.position.y = this.player.position.y + this.player.height;
         this.camera.position.z = this.player.position.z;
         this.camera.rotation.x = this.player.rotation.x;
         this.camera.rotation.y = this.player.rotation.y;

@@ -20,14 +20,15 @@ export class CameraPositionService {
     //console.log(this.direction);
     this.direction.x = Math.sin(player.rotation.y);
     this.direction.z = Math.cos(player.rotation.y);
+    const slowdown = 5;
 
     if (state.forward === true) {
-      player.position.z -= this.direction.z / 3 * deltaTime;
-      player.position.x -= this.direction.x / 3 * deltaTime;
+      player.position.z -= this.direction.z / slowdown * deltaTime;
+      player.position.x -= this.direction.x / slowdown * deltaTime;
     }
     if (state.backwards === true) {
-      player.position.z += this.direction.z / 3 * deltaTime;
-      player.position.x += this.direction.x / 3 * deltaTime;
+      player.position.z += this.direction.z / slowdown * deltaTime;
+      player.position.x += this.direction.x / slowdown * deltaTime;
     }
     if (state.right === true) {
       player.rotation.y -= 6 * Math.PI / 360 * deltaTime;
@@ -37,7 +38,8 @@ export class CameraPositionService {
     }
 
     if (state.mouseIsDown === true) {
-      player.position.z += (-.2 * deltaTime);
+      player.position.z -= this.direction.z / slowdown * deltaTime;
+      player.position.x -= this.direction.x / slowdown * deltaTime;
       player.rotation.y += -state.mouseX * 3 * Math.PI / 360 * deltaTime;
     }
 

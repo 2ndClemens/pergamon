@@ -10,6 +10,6 @@ export let ENTITIES: Entity[] = [
     { src: 'portal-pillar.glb', transforms: [], static: true, mirror: { x: false, y: false } },
     { src: 'roof.glb', transforms: [], static: true, mirror: { x: false, y: false } },
     { src: 'architrave.glb', transforms: [], static: true, mirror: { x: false, y: false } },
-    { src: 'navmesh.glb', transforms: [], static: true, mirror: { x: false, y: false } },
+   // { src: 'navmesh.glb', transforms: [], static: true, mirror: { x: false, y: false } },
 
 ];
