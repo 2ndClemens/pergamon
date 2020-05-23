@@ -91,7 +91,7 @@ export class EntityService {
             const posY = 0 + 0.225;
             // const rotY = Math.random() * Math.PI;
 
-            for (let k = 0; k < 39; k++) {
+            for (let k = 0; k < 20; k++) {
               entities[n].transforms.push({
                 rotation: { x: 0, y: 0, z: 0 },
 
@@ -102,22 +102,12 @@ export class EntityService {
 
 
             }
-            // move out at least 5 units from center in current direction
-          }
-          break;
 
-        case 'roof.glb':
-          for (let i = 0; i < 1; i++) {
-            const posX = 0;
-            const posZ = 0;
-            const posY = 0 + 0.225;
-            // const rotY = Math.random() * Math.PI;
-
-            for (let k = 0; k < 1; k++) {
+            for (let k = 0; k < 18; k++) {
               entities[n].transforms.push({
-                rotation: { x: 0, y: 0, z: 0 },
+                rotation: { x: 0, y: Math.PI, z: 0 },
 
-                position: { x: posX, y: posY, z: posZ },
+                position: { x: 15.2, y: posY, z: posZ - 4.454 * k },
                 speed: { x: 0, y: 0, z: 0 },
               });
 
@@ -127,8 +117,6 @@ export class EntityService {
             // move out at least 5 units from center in current direction
           }
           break;
-
-        
 
         case 'portal-pillar.glb':
 
