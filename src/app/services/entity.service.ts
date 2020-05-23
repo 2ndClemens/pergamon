@@ -40,6 +40,28 @@ export class EntityService {
           }
           break;
 
+        case 'hall-ceiling.glb':
+          for (let i = 0; i < 2; i++) {
+            const posX = i * 9.65;
+            const posZ = 2.645 * 4;
+            const posY = 5.00371;
+            // const rotY = Math.random() * Math.PI;
+
+            for (let k = 0; k < 100; k++) {
+              entities[n].transforms.push({
+                rotation: { x: 0, y: i * Math.PI, z: 0 },
+
+                position: { x: posX, y: posY, z: posZ - k * (2.645 / 2) },
+                speed: { x: 0, y: 0, z: 0 },
+              });
+
+
+
+            }
+            // move out at least 5 units from center in current direction
+          }
+          break;
+
         case 'pedistal.glb':
           for (let i = 0; i < 2; i++) {
             const posX = i * 9.65;
