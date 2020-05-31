@@ -18,6 +18,7 @@ export class InstancedObjectComponent implements OnInit, OnChanges {
   @Input() src;
   @Input() mirror;
   @Input() transforms: ObjectTransform[];
+  @Input() transform: ObjectTransform;
   @Input() lights = true;
   orientations;
   offsets;
@@ -72,6 +73,8 @@ export class InstancedObjectComponent implements OnInit, OnChanges {
       }
 
       const loadedMaterial = gltf.scene.children[0].material;
+      /* const loadedMaterial = new THREE.MeshBasicMaterial();
+      loadedMaterial.map = gltf.scene.children[0].material.map; */
 
       if (!this.lights) {
 
@@ -116,7 +119,7 @@ export class InstancedObjectComponent implements OnInit, OnChanges {
             ),
           );
           // vector.normalize();
-          // this.orientations.setXYZW(i, 0, vector.y, 0, 1);
+          this.orientations.setXYZW(i, 0, vector.y, 0, 1);
 
           this.orientations.setXYZW(i, vector.x, vector.y, vector.z, vector.w);
           // this.orientations.setY( i, vector.y );
@@ -135,13 +138,19 @@ export class InstancedObjectComponent implements OnInit, OnChanges {
           },
           vertexShader: this.vertexShader,
           fragmentShader: this.fragmentShader,
-          side: THREE.DoubleSide,
+          side: THREE.FrontSide,
           transparent: false,
 
         });
 
 
         const mesh = new THREE.Mesh(geometry, material);
+        if (this.transform && this.transform.rotation) {
+          mesh.rotation.set(this.transform.rotation.x, this.transform.rotation.y, this.transform.rotation.z);
+        }
+        if (this.transform && this.transform.position) {
+          mesh.position.set(this.transform.position.x, this.transform.position.y, this.transform.position.z);
+        }
         mesh.frustumCulled = false;
         mesh.matrixAutoUpdate = false;
         mesh.updateMatrix();
@@ -175,16 +184,23 @@ export class InstancedObjectComponent implements OnInit, OnChanges {
         }
 
       }
+      if (this.transform && this.transform.rotation) {
+        mesh.rotation.set(this.transform.rotation.x, this.transform.rotation.y, this.transform.rotation.z);
+      }
+      if (this.transform && this.transform.position) {
+        mesh.position.set(this.transform.position.x, this.transform.position.y, this.transform.position.z);
+      }
       mesh.matrixAutoUpdate = false;
+      
       mesh.updateMatrix();
       this.scene.add(mesh);
     });
 
-    
+
   }
 
   flipNormals(geometry) {
-    console.log(geometry);
+    // console.log(geometry);
     let temp = 0;
     // let face;
 

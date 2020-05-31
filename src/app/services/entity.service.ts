@@ -163,6 +163,26 @@ export class EntityService {
 
           break;
 
+          case 'column-court.glb':
+          for (let i = 0; i < 2; i++) {
+            const posX = i * 9.65;
+            const posZ = 2.645 * 4;
+            const posY = .5 + 0.225;
+            // const rotY = Math.random() * Math.PI;
+
+            for (let k = 0; k < 10; k++) {
+              entities[n].transforms.push({
+                rotation: { x: 0, y: 0, z: 0 },
+
+                position: { x: posX, y: posY, z: posZ - k * 2.645 },
+                speed: { x: 0, y: 0, z: 0 },
+              });
+
+            }
+            // move out at least 5 units from center in current direction
+          }
+          break;
+
         default:
 
           if (!entities[n].transforms || entities[n].transforms.length === 0) {

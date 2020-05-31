@@ -5,4 +5,5 @@ export interface Entity {
   transforms: ObjectTransform[];
   static: boolean;
   mirror?: { x: boolean, y: boolean };
+  transform?: ObjectTransform;
 }
