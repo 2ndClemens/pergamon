@@ -24,7 +24,7 @@ export class InstancedObjectComponent implements OnInit, OnChanges {
   offsets;
   // speeds;
   instanceBuffer;
-  instanceBufferSpeed;
+  //instanceBufferSpeed;
   vertexShader = vertexShader;
   fragmentShader = fragmentShader;
   constructor() { }
@@ -86,11 +86,11 @@ export class InstancedObjectComponent implements OnInit, OnChanges {
           8,
           1,
         ).setUsage(THREE.DynamicDrawUsage);
-        this.instanceBufferSpeed = new THREE.InstancedInterleavedBuffer(
+        /* this.instanceBufferSpeed = new THREE.InstancedInterleavedBuffer(
           new Float32Array(this.instances * 8),
           8,
           1,
-        ).setUsage(THREE.DynamicDrawUsage);
+        ).setUsage(THREE.DynamicDrawUsage); */
         this.offsets = new THREE.InterleavedBufferAttribute(this.instanceBuffer, 3, 0);
         // this.speeds = new THREE.InterleavedBufferAttribute(this.instanceBufferSpeed, 3, 0);
 

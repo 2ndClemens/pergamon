@@ -52,7 +52,7 @@ export class StageComponent implements OnInit {
 
     this.container = document.getElementById('container');
 
-    this.camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 1000);
+    this.camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, .3, 500);
     /*    this.camera.position.x = 5;
        this.camera.position.y = 1.6;
        this.camera.position.z = -5; */
