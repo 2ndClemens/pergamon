@@ -73,6 +73,7 @@ export class InstancedObjectComponent implements OnInit, OnChanges {
       }
 
       const loadedMaterial = gltf.scene.children[0].material;
+
       /* const loadedMaterial = new THREE.MeshBasicMaterial();
       loadedMaterial.map = gltf.scene.children[0].material.map; */
 
@@ -129,12 +130,17 @@ export class InstancedObjectComponent implements OnInit, OnChanges {
 
         // material
         const texture = loadedMaterial.map;
+        let ambientMap
+        if (gltf.scene.children[0].geometry.attributes.uv2) {
+          ambientMap = new THREE.TextureLoader().load('./assets/textures/stoa-floor-ao.jpg');
+        }
 
         if (texture) { texture.anisotropy = this.renderer.capabilities.getMaxAnisotropy(); }
 
         const material = new THREE.RawShaderMaterial({
           uniforms: {
             map: { value: texture },
+            ambientMap
           },
           vertexShader: this.vertexShader,
           fragmentShader: this.fragmentShader,
@@ -158,6 +164,15 @@ export class InstancedObjectComponent implements OnInit, OnChanges {
       } else {
 
         var count = this.transforms.length;
+
+
+        if (gltf.scene.children[0].geometry.attributes.uv2) {
+          let aoMap = new THREE.TextureLoader().load('assets/textures/stoa-floor-ao.png', (texture) => { texture.needsUpdate = true; texture.flipY = false; });
+          loadedMaterial.aoMap = aoMap;
+          loadedMaterial.aoMapIntensity = 2;
+        }
+
+
 
         var mesh = new THREE.InstancedMesh(mergeGeometry, loadedMaterial, count);
 
@@ -191,7 +206,7 @@ export class InstancedObjectComponent implements OnInit, OnChanges {
         mesh.position.set(this.transform.position.x, this.transform.position.y, this.transform.position.z);
       }
       mesh.matrixAutoUpdate = false;
-      
+
       mesh.updateMatrix();
       this.scene.add(mesh);
     });
