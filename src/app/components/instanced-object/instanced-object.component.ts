@@ -2,6 +2,7 @@ import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import * as THREE from 'three';
 
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { BufferGeometryUtils } from 'three/examples/jsm/utils/BufferGeometryUtils';
 import { vertexShader, fragmentShader } from '../../shader/instanced-shader';
 import { ObjectTransform } from 'src/app/models/object-transform';
 
@@ -27,7 +28,7 @@ export class InstancedObjectComponent implements OnInit, OnChanges {
   //instanceBufferSpeed;
   vertexShader = vertexShader;
   fragmentShader = fragmentShader;
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
     this.init();
@@ -55,21 +56,19 @@ export class InstancedObjectComponent implements OnInit, OnChanges {
       // console.log(gltf.scene);
       // const loadedGeometry = gltf.scene.children[0].geometry;
 
-      const g1 = new THREE.Geometry().fromBufferGeometry(
-        gltf.scene.children[0].geometry
-      );
+      const g1 = gltf.scene.children[0].geometry;
       // const matrix = new THREE.Matrix4();
-      const mergeGeometry = new THREE.Geometry();
-      mergeGeometry.merge(g1);
+      let mergeGeometry = new THREE.BufferGeometry();
+      mergeGeometry = BufferGeometryUtils.mergeBufferGeometries([g1]);
       if (this.mirror.x) {
         g1.rotateY(Math.PI);
-        mergeGeometry.merge(g1);
+        mergeGeometry = BufferGeometryUtils.mergeBufferGeometries([mergeGeometry, g1]);
         // matrix.set(-1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
         g1.scale(-1, 1, 1);
-        this.flipNormals(g1);
-        mergeGeometry.merge(g1);
+        // this.flipNormals(g1);
+        mergeGeometry = BufferGeometryUtils.mergeBufferGeometries([mergeGeometry, g1]);
         g1.rotateY(Math.PI);
-        mergeGeometry.merge(g1);
+        mergeGeometry = BufferGeometryUtils.mergeBufferGeometries([mergeGeometry, g1]);
       }
 
       const loadedMaterial = gltf.scene.children[0].material;
@@ -78,8 +77,7 @@ export class InstancedObjectComponent implements OnInit, OnChanges {
       loadedMaterial.map = gltf.scene.children[0].material.map; */
 
       if (!this.lights) {
-
-        const geometry = new THREE.InstancedBufferGeometry().fromGeometry(mergeGeometry);
+        const geometry = mergeGeometry;
 
         // per instance data
         this.instanceBuffer = new THREE.InstancedInterleavedBuffer(
@@ -116,7 +114,7 @@ export class InstancedObjectComponent implements OnInit, OnChanges {
             new THREE.Euler(
               this.transforms[i].rotation.x,
               this.transforms[i].rotation.y,
-              this.transforms[i].rotation.z
+              this.transforms[i].rotation.z,
             ),
           );
           // vector.normalize();
@@ -130,56 +128,65 @@ export class InstancedObjectComponent implements OnInit, OnChanges {
 
         // material
         const texture = loadedMaterial.map;
-        let ambientMap
+        let ambientMap;
         if (gltf.scene.children[0].geometry.attributes.uv2) {
           ambientMap = new THREE.TextureLoader().load('./assets/textures/stoa-floor-ao.jpg');
         }
 
-        if (texture) { texture.anisotropy = this.renderer.capabilities.getMaxAnisotropy(); }
+        if (texture) {
+          texture.anisotropy = this.renderer.capabilities.getMaxAnisotropy();
+        }
 
         const material = new THREE.RawShaderMaterial({
           uniforms: {
             map: { value: texture },
-            ambientMap
+            ambientMap,
           },
           vertexShader: this.vertexShader,
           fragmentShader: this.fragmentShader,
           side: THREE.FrontSide,
           transparent: false,
-
         });
-
 
         const mesh = new THREE.Mesh(geometry, material);
         if (this.transform && this.transform.rotation) {
-          mesh.rotation.set(this.transform.rotation.x, this.transform.rotation.y, this.transform.rotation.z);
+          mesh.rotation.set(
+            this.transform.rotation.x,
+            this.transform.rotation.y,
+            this.transform.rotation.z,
+          );
         }
         if (this.transform && this.transform.position) {
-          mesh.position.set(this.transform.position.x, this.transform.position.y, this.transform.position.z);
+          mesh.position.set(
+            this.transform.position.x,
+            this.transform.position.y,
+            this.transform.position.z,
+          );
         }
         mesh.frustumCulled = false;
         mesh.matrixAutoUpdate = false;
         mesh.updateMatrix();
         this.scene.add(mesh);
       } else {
-
         var count = this.transforms.length;
 
-
         if (gltf.scene.children[0].geometry.attributes.uv2) {
-          let aoMap = new THREE.TextureLoader().load('assets/textures/stoa-floor-ao.png', (texture) => { texture.needsUpdate = true; texture.flipY = false; });
+          let aoMap = new THREE.TextureLoader().load(
+            'assets/textures/stoa-floor-ao.png',
+            (texture) => {
+              texture.needsUpdate = true;
+              texture.flipY = false;
+            },
+          );
           loadedMaterial.aoMap = aoMap;
           loadedMaterial.aoMapIntensity = 2;
         }
-
-
 
         var mesh = new THREE.InstancedMesh(mergeGeometry, loadedMaterial, count);
 
         var dummy = new THREE.Object3D();
 
         for (var i = 0; i < count; i++) {
-
           dummy.position.set(
             this.transforms[i].position.x,
             this.transforms[i].position.y,
@@ -195,23 +202,27 @@ export class InstancedObjectComponent implements OnInit, OnChanges {
           dummy.updateMatrix();
 
           mesh.setMatrixAt(i, dummy.matrix);
-
         }
-
       }
       if (this.transform && this.transform.rotation) {
-        mesh.rotation.set(this.transform.rotation.x, this.transform.rotation.y, this.transform.rotation.z);
+        mesh.rotation.set(
+          this.transform.rotation.x,
+          this.transform.rotation.y,
+          this.transform.rotation.z,
+        );
       }
       if (this.transform && this.transform.position) {
-        mesh.position.set(this.transform.position.x, this.transform.position.y, this.transform.position.z);
+        mesh.position.set(
+          this.transform.position.x,
+          this.transform.position.y,
+          this.transform.position.z,
+        );
       }
       mesh.matrixAutoUpdate = false;
 
       mesh.updateMatrix();
       this.scene.add(mesh);
     });
-
-
   }
 
   flipNormals(geometry) {

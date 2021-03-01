@@ -35,9 +35,11 @@ export class StageComponent implements OnInit {
   // controls;
   clock: THREE.Clock;
 
-
-
-  constructor(public entityService: EntityService, public skyService: SkyService, public cameraPositionService: CameraPositionService) { }
+  constructor(
+    public entityService: EntityService,
+    public skyService: SkyService,
+    public cameraPositionService: CameraPositionService,
+  ) {}
 
   ngOnInit() {
     this.entityService.createEntities();
@@ -52,19 +54,16 @@ export class StageComponent implements OnInit {
 
     this.container = document.getElementById('container');
 
-    this.camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, .3, 500);
+    this.camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.3, 500);
     /*    this.camera.position.x = 5;
        this.camera.position.y = 1.6;
        this.camera.position.z = -5; */
     this.camera.matrixAutoUpdate = false;
     // this.camera.rotation.y = Math.PI;
 
-
     this.scene = new THREE.Scene();
 
     this.renderer = new THREE.WebGLRenderer();
-
-
 
     /*  this.controls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
         this.controls.dampingFactor = 0.05;
@@ -74,20 +73,17 @@ export class StageComponent implements OnInit {
         this.controls.maxPolarAngle = Math.PI / 2.015;
         this.controls.target.set(0, 0, 60);
      */
-
-
-
+    
     this.skyService.makeSky(this.scene);
 
-    if (this.renderer.extensions.get('ANGLE_instanced_arrays') === null) {
-      document.getElementById('notSupported').style.display = '';
+  /*   if (this.renderer.extensions.get('ANGLE_instanced_arrays') === null) {
+      //document.getElementById('notSupported').style.display = '';
       return;
-    }
-
+    } */
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.renderer.setSize(window.innerWidth, window.innerHeight);
     this.container.appendChild(this.renderer.domElement);
-
+    
     this.stats = Stats();
     this.container.appendChild(this.stats.dom);
 
@@ -103,7 +99,6 @@ export class StageComponent implements OnInit {
     this.player = new Player();
     const loader2 = new YUKA.NavMeshLoader();
     loader2.load('./assets/models/navmesh.glb', { epsilonCoplanarTest: 0.25 }).then((navMesh) => {
-
       // visualize convex regions
 
       // const navMeshGroup = createConvexRegionHelper( navMesh );
@@ -112,7 +107,7 @@ export class StageComponent implements OnInit {
       this.player.navMesh = navMesh;
       this.player.head.setRenderComponent(this.camera, this.sync);
 
-      this.player.position.set(5, 0, - 5);
+      this.player.position.set(5, 0, -5);
       this.entityManager.add(this.player);
 
       // const loadingScreen = document.getElementById( 'loading-screen' );
@@ -121,10 +116,8 @@ export class StageComponent implements OnInit {
       // loadingScreen.addEventListener( 'transitionend', onTransitionEnd );
 
       // animate();
-
     });
-
-
+    
     this.animate();
   }
 
@@ -140,10 +133,6 @@ export class StageComponent implements OnInit {
   animate() {
     requestAnimationFrame(this.animate.bind(this));
     this.render();
-
-
-
-
   }
 
   render() {
@@ -151,22 +140,18 @@ export class StageComponent implements OnInit {
     // this.deltaTime = this.clock.getDelta();
     const delta = this.time.update().getDelta();
     this.cameraPositionService.updateCamera(this.player, delta * 30);
-    
+
     this.entityManager.update(delta);
-        this.camera.position.x = this.player.position.x;
-        this.camera.position.y = this.player.position.y + this.player.height;
-        this.camera.position.z = this.player.position.z;
-        this.camera.rotation.x = this.player.rotation.x;
-        this.camera.rotation.y = this.player.rotation.y;
-        this.camera.rotation.z = this.player.rotation.z;
+    this.camera.position.x = this.player.position.x;
+    this.camera.position.y = this.player.position.y + this.player.height;
+    this.camera.position.z = this.player.position.z;
+    this.camera.rotation.x = this.player.rotation.x;
+    this.camera.rotation.y = this.player.rotation.y;
+    this.camera.rotation.z = this.player.rotation.z;
 
     // console.log(this.player.position.x);
 
-
-
     // controls.update( delta );
-
-
 
     this.camera.updateProjectionMatrix();
     this.camera.updateMatrix();
@@ -174,8 +159,6 @@ export class StageComponent implements OnInit {
   }
 
   sync(entity, renderComponent) {
-
     // renderComponent.matrixWorld.copy(entity.worldMatrix);
-
   }
 }

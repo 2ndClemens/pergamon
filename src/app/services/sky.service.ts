@@ -22,7 +22,7 @@ export class SkyService {
     const uniforms = sky.material.uniforms;
     uniforms.turbidity.value = 10;
     uniforms.rayleigh.value = 2;
-    uniforms.luminance.value = 1;
+    //uniforms.luminance.value = 1;
     uniforms.mieCoefficient.value = 0.005;
     uniforms.mieDirectionalG.value = 0.8;
     const parameters = {
