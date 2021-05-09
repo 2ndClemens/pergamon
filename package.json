@@ -20,9 +20,9 @@
     "@angular/platform-browser-dynamic": "~11.2.3",
     "@angular/router": "~11.2.3",
     "rxjs": "~6.6.6",
-    "three": "^0.126.0",
+    "three": "^0.128.0",
     "tslib": "^2.1.0",
-    "yuka": "^0.7.3",
+    "yuka": "^0.7.6",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
