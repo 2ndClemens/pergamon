@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, ChangeDetectionStrategy } from '@angular/core';
 import * as THREE from 'three';
 
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
@@ -10,6 +10,8 @@ import { ObjectTransform } from 'src/app/models/object-transform';
   selector: 'pgm-instanced-object',
   templateUrl: './instanced-object.component.html',
   styleUrls: ['./instanced-object.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+
 })
 export class InstancedObjectComponent implements OnInit, OnChanges {
   @Input() scene;

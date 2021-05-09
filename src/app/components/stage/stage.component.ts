@@ -1,4 +1,4 @@
-import { Component, OnInit, ɵPlayer } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ɵPlayer } from '@angular/core';
 import * as THREE from 'three';
 import * as YUKA from 'yuka';
 import { Player } from '../Player.js';
@@ -18,6 +18,8 @@ import { CameraPositionService } from 'src/app/services/camera-position.service'
   selector: 'pgm-stage',
   templateUrl: './stage.component.html',
   styleUrls: ['./stage.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+
 })
 export class StageComponent implements OnInit {
   container;

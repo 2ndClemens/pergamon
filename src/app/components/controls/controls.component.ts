@@ -1,11 +1,13 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, ChangeDetectionStrategy } from '@angular/core';
 import { ControlState } from 'src/app/models/control-state';
 import { ControlStateService } from 'src/app/services/control-state.service';
 
 @Component({
   selector: 'pgm-controls',
   templateUrl: './controls.component.html',
-  styleUrls: ['./controls.component.scss']
+  styleUrls: ['./controls.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+
 })
 export class ControlsComponent implements OnInit {
   controlState: ControlState
