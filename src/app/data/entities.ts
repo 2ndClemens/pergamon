@@ -22,6 +22,16 @@ export let ENTITIES: Entity[] = [
     static: true,
     mirror: { x: false, y: false },
   },
+  {
+    src: 'column-propylon.glb',
+    transform: {
+      rotation: { x: 0, y: (Math.PI / 180) * -40.5, z: 0 },
+      position: { x: -18.7705, z: 52.6765, y: -5.02641 },
+    },
+    transforms: [],
+    static: true,
+    mirror: { x: false, y: false },
+  },
   { src: 'pedistal.glb', transforms: [], static: true, mirror: { x: false, y: false } },
   { src: 'shaft.glb', transforms: [], static: true, mirror: { x: false, y: false } },
   {

@@ -1292,6 +1292,26 @@
           y: false
         }
       }, {
+        src: 'column-propylon.glb',
+        transform: {
+          rotation: {
+            x: 0,
+            y: Math.PI / 180 * -40.5,
+            z: 0
+          },
+          position: {
+            x: -18.7705,
+            z: 52.6765,
+            y: -5.02641
+          }
+        },
+        transforms: [],
+        "static": true,
+        mirror: {
+          x: false,
+          y: false
+        }
+      }, {
         src: 'pedistal.glb',
         transforms: [],
         "static": true,
@@ -2068,6 +2088,59 @@
                         x: _posX10,
                         y: _posY9,
                         z: _posZ10
+                      }
+                    });
+                  }
+
+                  break;
+
+                case 'column-propylon.glb':
+                  for (var _i12 = 0; _i12 < 2; _i12++) {
+                    var _posZ11 = -13.5824;
+
+                    var _posY10 = 2.94571;
+
+                    var _distance6 = 34.0016 - 36.6416;
+
+                    var _posX11 = -5.25 + _i12 * 11.4742 * 2; // const rotY = Math.random() * Math.PI;
+
+
+                    for (var _k12 = 0; _k12 < 11; _k12++) {
+                      entities[n].transforms.push({
+                        rotation: {
+                          x: 0,
+                          y: 0,
+                          z: 0
+                        },
+                        position: {
+                          x: _posX11,
+                          y: _posY10,
+                          z: _posZ11 - _k12 * _distance6
+                        }
+                      });
+                    } // move out at least 5 units from center in current direction
+
+                  }
+
+                  for (var _k13 = 1; _k13 < 9; _k13++) {
+                    var _distance7 = -11.4758 + 8.92584;
+
+                    var _posX12 = -11.4742 - _k13 * _distance7;
+
+                    var _posY11 = 2.70996;
+
+                    var _posZ12 = -36.6416;
+
+                    entities[n].transforms.push({
+                      rotation: {
+                        x: 0,
+                        y: 0,
+                        z: 0
+                      },
+                      position: {
+                        x: _posX12,
+                        y: _posY11,
+                        z: _posZ12
                       }
                     });
                   }
