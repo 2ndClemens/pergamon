@@ -2041,110 +2041,129 @@
 
                   break;
 
-                case 'corinthian-capital-propylon.glb':
-                  for (var _i11 = 0; _i11 < 2; _i11++) {
-                    var _posZ9 = -13.5824;
-
-                    var _posY8 = 2.94571;
-
-                    var _distance4 = 34.0016 - 36.6416;
-
-                    var _posX9 = -5.25 + _i11 * 11.4742 * 2; // const rotY = Math.random() * Math.PI;
-
-
-                    for (var _k10 = 0; _k10 < 11; _k10++) {
-                      entities[n].transforms.push({
-                        rotation: {
-                          x: 0,
-                          y: 0,
-                          z: 0
-                        },
-                        position: {
-                          x: _posX9,
-                          y: _posY8,
-                          z: _posZ9 - _k10 * _distance4
-                        }
-                      });
-                    } // move out at least 5 units from center in current direction
-
-                  }
-
-                  for (var _k11 = 1; _k11 < 9; _k11++) {
-                    var _distance5 = -11.4758 + 8.92584;
-
-                    var _posX10 = -11.4742 - _k11 * _distance5;
-
-                    var _posY9 = 2.70996;
-
-                    var _posZ10 = -36.6416;
-
-                    entities[n].transforms.push({
-                      rotation: {
-                        x: 0,
-                        y: 0,
-                        z: 0
-                      },
-                      position: {
-                        x: _posX10,
-                        y: _posY9,
-                        z: _posZ10
-                      }
-                    });
-                  }
-
-                  break;
-
                 case 'column-propylon.glb':
-                  for (var _i12 = 0; _i12 < 2; _i12++) {
-                    var _posZ11 = -13.5824;
-
-                    var _posY10 = 2.94571;
-
-                    var _distance6 = 34.0016 - 36.6416;
-
-                    var _posX11 = -5.25 + _i12 * 11.4742 * 2; // const rotY = Math.random() * Math.PI;
-
-
-                    for (var _k12 = 0; _k12 < 11; _k12++) {
-                      entities[n].transforms.push({
-                        rotation: {
-                          x: 0,
-                          y: 0,
-                          z: 0
-                        },
-                        position: {
-                          x: _posX11,
-                          y: _posY10,
-                          z: _posZ11 - _k12 * _distance6
-                        }
-                      });
-                    } // move out at least 5 units from center in current direction
-
-                  }
-
-                  for (var _k13 = 1; _k13 < 9; _k13++) {
-                    var _distance7 = -11.4758 + 8.92584;
-
-                    var _posX12 = -11.4742 - _k13 * _distance7;
-
-                    var _posY11 = 2.70996;
-
-                    var _posZ12 = -36.6416;
-
-                    entities[n].transforms.push({
-                      rotation: {
-                        x: 0,
-                        y: 0,
-                        z: 0
-                      },
-                      position: {
-                        x: _posX12,
-                        y: _posY11,
-                        z: _posZ12
-                      }
-                    });
-                  }
-
+                case 'corinthian-capital-propylon.glb':
+                  var posY2 = 2.94571;
+                  entities[n].transforms.push({
+                    rotation: {
+                      x: 0,
+                      y: 0,
+                      z: 0
+                    },
+                    position: {
+                      x: -5.25,
+                      y: posY2,
+                      z: -13.5824
+                    }
+                  });
+                  entities[n].transforms.push({
+                    rotation: {
+                      x: 0,
+                      y: 0,
+                      z: 0
+                    },
+                    position: {
+                      x: -1.75,
+                      y: posY2,
+                      z: -13.5824
+                    }
+                  });
+                  entities[n].transforms.push({
+                    rotation: {
+                      x: 0,
+                      y: 0,
+                      z: 0
+                    },
+                    position: {
+                      x: 1.75,
+                      y: posY2,
+                      z: -13.5824
+                    }
+                  });
+                  entities[n].transforms.push({
+                    rotation: {
+                      x: 0,
+                      y: 0,
+                      z: 0
+                    },
+                    position: {
+                      x: -1.75,
+                      y: posY2,
+                      z: -9.86405
+                    }
+                  });
+                  entities[n].transforms.push({
+                    rotation: {
+                      x: 0,
+                      y: 0,
+                      z: 0
+                    },
+                    position: {
+                      x: 1.75,
+                      y: posY2,
+                      z: -9.86405
+                    }
+                  });
+                  entities[n].transforms.push({
+                    rotation: {
+                      x: 0,
+                      y: 0,
+                      z: 0
+                    },
+                    position: {
+                      x: 5.25,
+                      y: posY2,
+                      z: -13.5824
+                    }
+                  });
+                  entities[n].transforms.push({
+                    rotation: {
+                      x: 0,
+                      y: 0,
+                      z: 0
+                    },
+                    position: {
+                      x: -5.25,
+                      y: posY2,
+                      z: 0
+                    }
+                  });
+                  entities[n].transforms.push({
+                    rotation: {
+                      x: 0,
+                      y: 0,
+                      z: 0
+                    },
+                    position: {
+                      x: -1.75,
+                      y: posY2,
+                      z: 0
+                    }
+                  });
+                  entities[n].transforms.push({
+                    rotation: {
+                      x: 0,
+                      y: 0,
+                      z: 0
+                    },
+                    position: {
+                      x: 1.75,
+                      y: posY2,
+                      z: 0
+                    }
+                  });
+                  entities[n].transforms.push({
+                    rotation: {
+                      x: 0,
+                      y: 0,
+                      z: 0
+                    },
+                    position: {
+                      x: 5.25,
+                      y: posY2,
+                      z: 0
+                    }
+                  });
                   break;
 
                 default:
