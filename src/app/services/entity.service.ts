@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
-import { ENTITIES } from '../data/entities'
-
+import { ENTITIES } from '../data/entities';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class EntityService {
-
-  constructor() { }
+  constructor() {}
 
   public getEntities() {
     return ENTITIES;
@@ -17,7 +15,6 @@ export class EntityService {
     const entities = this.getEntities();
     for (let n = 0; n < entities.length; n++) {
       switch (entities[n].src) {
-
         case 'capitol.glb':
           for (let i = 0; i < 2; i++) {
             const posX = i * 9.65;
@@ -31,9 +28,6 @@ export class EntityService {
 
                 position: { x: posX, y: posY, z: posZ - k * 2.645 },
               });
-
-
-
             }
             // move out at least 5 units from center in current direction
           }
@@ -52,9 +46,6 @@ export class EntityService {
 
                 position: { x: posX, y: posY, z: posZ - k * (2.645 / 2) },
               });
-
-
-
             }
             // move out at least 5 units from center in current direction
           }
@@ -64,7 +55,7 @@ export class EntityService {
           for (let i = 0; i < 2; i++) {
             const posX = i * 9.65;
             const posZ = 2.645 * 4;
-            const posY = .5 + 0.225;
+            const posY = 0.5 + 0.225;
             // const rotY = Math.random() * Math.PI;
 
             for (let k = 0; k < 100; k++) {
@@ -73,9 +64,6 @@ export class EntityService {
 
                 position: { x: posX, y: posY, z: posZ - k * 2.645 },
               });
-
-
-
             }
             // move out at least 5 units from center in current direction
           }
@@ -85,7 +73,7 @@ export class EntityService {
           for (let i = 0; i < 2; i++) {
             const posX = i * 9.65;
             const posZ = 2.645 * 4;
-            const posY = .5 + 0.225;
+            const posY = 0.5 + 0.225;
             // const rotY = Math.random() * Math.PI;
 
             for (let k = 0; k < 100; k++) {
@@ -94,9 +82,6 @@ export class EntityService {
 
                 position: { x: posX, y: posY, z: posZ - k * 2.645 },
               });
-
-
-
             }
             // move out at least 5 units from center in current direction
           }
@@ -115,9 +100,6 @@ export class EntityService {
 
                 position: { x: posX, y: posY, z: posZ - 4.454 * k },
               });
-
-
-
             }
 
             for (let k = 0; k < 18; k++) {
@@ -126,16 +108,12 @@ export class EntityService {
 
                 position: { x: 15.2, y: posY, z: posZ - 4.454 * k },
               });
-
-
-
             }
             // move out at least 5 units from center in current direction
           }
           break;
 
         case 'portal-pillar.glb':
-
           entities[n].transforms.push({
             rotation: { x: 0, y: -Math.PI / 4, z: 0 },
 
@@ -143,20 +121,16 @@ export class EntityService {
           });
 
           entities[n].transforms.push({
-            rotation: { x: 0, y: Math.PI / 4 * 3, z: 0 },
+            rotation: { x: 0, y: (Math.PI / 4) * 3, z: 0 },
 
             position: { x: 5.6107, y: -2.25, z: 18.3544 },
           });
-
-
-
 
           // move out at least 5 units from center in current direction
 
           break;
 
         case 'column-court.glb':
-          
           const posZ = -36.6416;
           const posY = 2.70996;
           const distance = 34.0016 - 36.6416;
@@ -170,7 +144,6 @@ export class EntityService {
 
                 position: { x: posX, y: posY, z: posZ - k * distance },
               });
-
             }
             // move out at least 5 units from center in current direction
           }
@@ -182,12 +155,39 @@ export class EntityService {
               rotation: { x: 0, y: 0, z: 0 },
               position: { x: posX, y: posY, z: posZ },
             });
+          }
+          break;
 
+        case 'corinthian-capital.glb':
+          for (let i = 0; i < 2; i++) {
+            const posZ = -36.6416;
+            const posY = 2.70996;
+            const distance = 34.0016 - 36.6416;
+            const posX = -11.4742 + i * 11.4742 * 2;
+            // const rotY = Math.random() * Math.PI;
+
+            for (let k = 0; k < 11; k++) {
+              entities[n].transforms.push({
+                rotation: { x: 0, y: 0, z: 0 },
+
+                position: { x: posX, y: posY, z: posZ - k * distance },
+              });
+            }
+            // move out at least 5 units from center in current direction
+          }
+          for (let k = 1; k < 9; k++) {
+            const distance = -11.4758 + 8.92584;
+            const posX = -11.4742 - k * distance;
+            const posY = 2.70996;
+            const posZ = -36.6416;
+            entities[n].transforms.push({
+              rotation: { x: 0, y: 0, z: 0 },
+              position: { x: posX, y: posY, z: posZ },
+            });
           }
           break;
 
         default:
-
           if (!entities[n].transforms || entities[n].transforms.length === 0) {
             entities[n].transforms.push({
               rotation: { x: 0, y: 0, z: 0 },
@@ -196,14 +196,10 @@ export class EntityService {
             });
           }
 
-
-
           // move out at least 5 units from center in current direction
 
           break;
-
       }
     }
   }
-
 }
