@@ -187,6 +187,35 @@ export class EntityService {
           }
           break;
 
+        case 'corinthian-capital-propylon.glb':
+          for (let i = 0; i < 2; i++) {
+            const posZ = -13.5824;
+            const posY = 2.94571;
+            const distance = 34.0016 - 36.6416;
+            const posX = -5.25 + i * 11.4742 * 2;
+            // const rotY = Math.random() * Math.PI;
+
+            for (let k = 0; k < 11; k++) {
+              entities[n].transforms.push({
+                rotation: { x: 0, y: 0, z: 0 },
+
+                position: { x: posX, y: posY, z: posZ - k * distance },
+              });
+            }
+            // move out at least 5 units from center in current direction
+          }
+          for (let k = 1; k < 9; k++) {
+            const distance = -11.4758 + 8.92584;
+            const posX = -11.4742 - k * distance;
+            const posY = 2.70996;
+            const posZ = -36.6416;
+            entities[n].transforms.push({
+              rotation: { x: 0, y: 0, z: 0 },
+              position: { x: posX, y: posY, z: posZ },
+            });
+          }
+          break;
+
         default:
           if (!entities[n].transforms || entities[n].transforms.length === 0) {
             entities[n].transforms.push({
