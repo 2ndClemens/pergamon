@@ -1272,6 +1272,26 @@
           y: false
         }
       }, {
+        src: 'corinthian-capital-propylon.glb',
+        transform: {
+          rotation: {
+            x: 0,
+            y: Math.PI / 180 * -40.5,
+            z: 0
+          },
+          position: {
+            x: -18.7705,
+            z: 52.6765,
+            y: -5.02641
+          }
+        },
+        transforms: [],
+        "static": true,
+        mirror: {
+          x: false,
+          y: false
+        }
+      }, {
         src: 'pedistal.glb',
         transforms: [],
         "static": true,
@@ -1995,6 +2015,59 @@
                         x: _posX8,
                         y: _posY7,
                         z: _posZ8
+                      }
+                    });
+                  }
+
+                  break;
+
+                case 'corinthian-capital-propylon.glb':
+                  for (var _i11 = 0; _i11 < 2; _i11++) {
+                    var _posZ9 = -13.5824;
+
+                    var _posY8 = 2.94571;
+
+                    var _distance4 = 34.0016 - 36.6416;
+
+                    var _posX9 = -5.25 + _i11 * 11.4742 * 2; // const rotY = Math.random() * Math.PI;
+
+
+                    for (var _k10 = 0; _k10 < 11; _k10++) {
+                      entities[n].transforms.push({
+                        rotation: {
+                          x: 0,
+                          y: 0,
+                          z: 0
+                        },
+                        position: {
+                          x: _posX9,
+                          y: _posY8,
+                          z: _posZ9 - _k10 * _distance4
+                        }
+                      });
+                    } // move out at least 5 units from center in current direction
+
+                  }
+
+                  for (var _k11 = 1; _k11 < 9; _k11++) {
+                    var _distance5 = -11.4758 + 8.92584;
+
+                    var _posX10 = -11.4742 - _k11 * _distance5;
+
+                    var _posY9 = 2.70996;
+
+                    var _posZ10 = -36.6416;
+
+                    entities[n].transforms.push({
+                      rotation: {
+                        x: 0,
+                        y: 0,
+                        z: 0
+                      },
+                      position: {
+                        x: _posX10,
+                        y: _posY9,
+                        z: _posZ10
                       }
                     });
                   }
