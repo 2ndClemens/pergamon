@@ -90,7 +90,7 @@ export let ENTITIES: Entity[] = [
     transforms: [
       {
         rotation: { x: 0, y: (Math.PI / 180) * -40.5, z: 0 },
-        position: { x: -18.7705, z: 52.6765, y: -5.02641 },
+        position: { x: -43.7836 , z: 38.2562, y: -5.02641 },
       },
     ],
     static: true,
@@ -101,7 +101,7 @@ export let ENTITIES: Entity[] = [
     transforms: [
       {
         rotation: { x: 0, y: (Math.PI / 180) * -40.5, z: 0 },
-        position: { x: -18.7705, z: 52.6765, y: -5.02641 },
+        position: { x: -43.7836 , z: 38.2562, y: -5.02641 },
       },
     ],
     static: true,
