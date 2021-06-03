@@ -852,6 +852,38 @@ let ENTITIES = [
         mirror: { x: false, y: false },
     },
     {
+        src: 'court.glb',
+        transforms: [
+            {
+                rotation: { x: 0, y: (Math.PI / 180) * -40.5, z: 0 },
+                position: { x: -43.7836, z: 38.2562, y: -5.02641 },
+            },
+        ],
+        static: true,
+        mirror: { x: false, y: false },
+    },
+    {
+        src: 'column-stoa.glb',
+        transform: {
+            rotation: { x: 0, y: (Math.PI / 180) * -40.5, z: 0 },
+            position: { x: -43.7836, z: 38.2562, y: -5.02641 },
+        },
+        transforms: [],
+        static: true,
+        mirror: { x: false, y: false },
+    },
+    {
+        src: 'court-walls.glb',
+        transforms: [
+            {
+                rotation: { x: 0, y: (Math.PI / 180) * -40.5, z: 0 },
+                position: { x: -43.7836, z: 38.2562, y: -5.02641 },
+            },
+        ],
+        static: true,
+        mirror: { x: false, y: false },
+    },
+    {
         src: 'propylon-architrave.glb',
         transforms: [
             {
@@ -1147,6 +1179,18 @@ let EntityService = class EntityService {
                         const posX = -11.4742 - k * distance;
                         const posY = 2.70996;
                         const posZ = -36.6416;
+                        entities[n].transforms.push({
+                            rotation: { x: 0, y: 0, z: 0 },
+                            position: { x: posX, y: posY, z: posZ },
+                        });
+                    }
+                    break;
+                case 'column-stoa.glb':
+                    for (let k = 0; k < 43; k++) {
+                        const distance = 2.656 - 5.312;
+                        const posX = 0;
+                        const posY = 0;
+                        const posZ = -k * distance;
                         entities[n].transforms.push({
                             rotation: { x: 0, y: 0, z: 0 },
                             position: { x: posX, y: posY, z: posZ },

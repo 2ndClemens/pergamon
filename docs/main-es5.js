@@ -1469,6 +1469,64 @@
           y: false
         }
       }, {
+        src: 'court.glb',
+        transforms: [{
+          rotation: {
+            x: 0,
+            y: Math.PI / 180 * -40.5,
+            z: 0
+          },
+          position: {
+            x: -43.7836,
+            z: 38.2562,
+            y: -5.02641
+          }
+        }],
+        "static": true,
+        mirror: {
+          x: false,
+          y: false
+        }
+      }, {
+        src: 'column-stoa.glb',
+        transform: {
+          rotation: {
+            x: 0,
+            y: Math.PI / 180 * -40.5,
+            z: 0
+          },
+          position: {
+            x: -43.7836,
+            z: 38.2562,
+            y: -5.02641
+          }
+        },
+        transforms: [],
+        "static": true,
+        mirror: {
+          x: false,
+          y: false
+        }
+      }, {
+        src: 'court-walls.glb',
+        transforms: [{
+          rotation: {
+            x: 0,
+            y: Math.PI / 180 * -40.5,
+            z: 0
+          },
+          position: {
+            x: -43.7836,
+            z: 38.2562,
+            y: -5.02641
+          }
+        }],
+        "static": true,
+        mirror: {
+          x: false,
+          y: false
+        }
+      }, {
         src: 'propylon-architrave.glb',
         transforms: [{
           rotation: {
@@ -2035,6 +2093,31 @@
                         x: _posX8,
                         y: _posY7,
                         z: _posZ8
+                      }
+                    });
+                  }
+
+                  break;
+
+                case 'column-stoa.glb':
+                  for (var _k10 = 0; _k10 < 43; _k10++) {
+                    var _distance4 = 2.656 - 5.312;
+
+                    var _posX9 = 0;
+                    var _posY8 = 0;
+
+                    var _posZ9 = -_k10 * _distance4;
+
+                    entities[n].transforms.push({
+                      rotation: {
+                        x: 0,
+                        y: 0,
+                        z: 0
+                      },
+                      position: {
+                        x: _posX9,
+                        y: _posY8,
+                        z: _posZ9
                       }
                     });
                   }
