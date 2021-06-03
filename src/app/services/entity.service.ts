@@ -187,6 +187,19 @@ export class EntityService {
           }
           break;
 
+          case 'column-stoa.glb':
+            for (let k = 0; k < 43; k++) {
+              const distance = 2.656 - 5.312;
+              const posX = 0;
+              const posY = 0;
+              const posZ = -k * distance;
+              entities[n].transforms.push({
+                rotation: { x: 0, y: 0, z: 0 },
+                position: { x: posX, y: posY, z: posZ },
+              });
+            }
+            break;
+
         case 'column-propylon.glb':
         case 'corinthian-capital-propylon.glb':
           const posY2 = 2.94571;
